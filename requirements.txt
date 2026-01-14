@@ -1,0 +1,32 @@
+fastapi
+uvicorn
+pydantic
+starlette
+click
+anyio
+sniffio
+websockets
+python-multipart
+twilio
+python-dotenv
+pydub
+python-dateutil
+six
+httpx
+pygments
+rich
+attrs
+openai
+PyJWT
+tzdata
+
+# PVARA AI Board Seat - Vector DB & Embeddings
+pinecone
+langchain
+langchain-openai
+langchain-community
+
+# Document Processing
+pypdf
+python-docx
+langchain-text-splitters
