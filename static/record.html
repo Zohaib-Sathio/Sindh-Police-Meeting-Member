@@ -1,695 +1,791 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sindh Police - Voice Recording Vote</title>
 
-    <link rel="icon" href="/client/pvara.png" type="image/png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sindh Police - Voice Recording Vote</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              "pvara-green": "#000000",
-              "pvara-teal": "#333333",
-              "pvara-mint": "#000000",
-              "pvara-gold": "#666666",
-              "pvara-dark": "#1a1a1a",
-              "pvara-darker": "#000000",
-              "vote-for": "#4a4a4a",
-              "vote-against": "#000000",
-              "vote-abstain": "#666666",
+  <link rel="icon" href="/client/pvara.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "navy": {
+              500: "#1e3a5f",
+              600: "#0f2847",
+              700: "#0a1628",
             },
-            fontFamily: {
-              sans: ["Plus Jakarta Sans", "sans-serif"],
+            "gold": {
+              300: "#fad969",
+              400: "#f8cb47",
+              500: "#d4af37",
+              600: "#c4a000",
             },
+            "pvara-green": "#10b981",
+            "pvara-teal": "#1e3a5f",
+            "pvara-mint": "#10b981",
+            "pvara-gold": "#d4af37",
+            "pvara-dark": "#0f2847",
+            "pvara-darker": "#0a1628",
+            "vote-for": "#10b981",
+            "vote-against": "#ef4444",
+            "vote-abstain": "#d4af37",
+          },
+          fontFamily: {
+            sans: ["Inter", "Plus Jakarta Sans", "sans-serif"],
           },
         },
-      };
-    </script>
-    <style>
-      body {
-        font-family: "Plus Jakarta Sans", sans-serif;
-        background: #f9fafb;
-        min-height: 100vh;
-      }
-      .glass-card {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        border-radius: 0.75rem;
-      }
-      .gradient-text {
-        background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-weight: 700;
-      }
-      .btn-primary {
-        background: #22c55e;
-        color: #ffffff;
-        box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
-        font-weight: 600;
-      }
-      .btn-primary:hover {
-        background: #16a34a;
-        box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
-        transform: translateY(-1px);
-      }
-      .btn-record {
-        background: #ef4444;
-        color: #ffffff;
-        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
-        font-weight: 600;
-      }
-      .btn-record:hover {
-        background: #dc2626;
-        box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
-        transform: translateY(-1px);
-      }
-      @keyframes pulse-recording {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.1); opacity: 0.8; }
-      }
-      .recording-pulse {
-        animation: pulse-recording 1s ease-in-out infinite;
-      }
-      @keyframes wave {
-        0%, 100% { height: 20%; }
-        50% { height: 80%; }
-      }
-      .wave-bar {
-        animation: wave 0.5s ease-in-out infinite;
-      }
-    </style>
-  </head>
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: "Inter", "Plus Jakarta Sans", sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #0f2847 50%, #0a1628 100%);
+      min-height: 100vh;
+      color: #e8eef5;
+    }
 
-  <body class="text-black">
-    <!-- Login Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-      <div class="glass-card rounded-2xl max-w-md w-full p-8">
-        <div class="text-center mb-8">
-          <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-16 mx-auto mb-4" onerror="this.outerHTML='<h1 class=\'text-3xl font-bold gradient-text\'>Sindh Police</h1>'" />
-          <h2 class="text-xl font-semibold text-black mb-1">Voice Recording Vote</h2>
-          <p class="text-sm text-black/60">Record your motion for AI analysis</p>
-        </div>
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(30, 58, 95, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(15, 40, 71, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        <form id="loginForm" class="space-y-4">
-          <div>
-            <input type="text" id="username" required placeholder="Username"
-              class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-black placeholder-gray-400 focus:border-black outline-none" />
-          </div>
-          <div>
-            <input type="password" id="password" required placeholder="Password"
-              class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-black placeholder-gray-400 focus:border-black outline-none" />
-          </div>
-          <div id="loginError" class="hidden text-red-400 text-sm text-center"></div>
-          <button type="submit" class="w-full btn-primary text-white font-semibold py-3 rounded-lg">Sign In</button>
-        </form>
+    .glass-card {
+      background: linear-gradient(135deg, rgba(15, 40, 71, 0.8) 0%, rgba(30, 58, 95, 0.6) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #d4af37 0%, #fad969 50%, #c4a000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d4af37 0%, #c4a000 100%);
+      color: #0a1628;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      font-weight: 600;
+      border: 1px solid rgba(250, 217, 105, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fad969 0%, #d4af37 100%);
+      box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:disabled {
+      background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+      box-shadow: none;
+      cursor: not-allowed;
+      color: #9ca3af;
+    }
+
+    .btn-record {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-record:hover {
+      background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+      box-shadow: 0 6px 25px rgba(239, 68, 68, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .logo-glow {
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+    }
+
+    @keyframes pulse-recording {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    .recording-pulse {
+      animation: pulse-recording 1s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+
+      0%,
+      100% {
+        height: 20%;
+      }
+
+      50% {
+        height: 80%;
+      }
+    }
+
+    .wave-bar {
+      animation: wave 0.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="text-gray-100">
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl max-w-md w-full p-8 border border-gold-500/30">
+      <div class="text-center mb-8">
+        <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-16 mx-auto mb-4 logo-glow"
+          onerror="this.outerHTML='<h1 class=\'text-3xl font-bold gradient-text\'>Sindh Police</h1>'" />
+        <h2 class="text-xl font-semibold text-white mb-1">Voice Recording Vote</h2>
+        <p class="text-sm text-gold-400">Record your motion for AI analysis</p>
       </div>
-    </div>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="hidden">
-      <!-- Header -->
-      <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <a href="/" class="flex items-center gap-3">
-              <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-8" onerror="this.outerHTML='<span class=\'text-xl font-bold gradient-text\'>Sindh Police</span>'" />
-              <div>
-                <h1 class="text-lg font-bold text-white">Voice Recording Vote</h1>
-                <p class="text-xs text-gray-300">Async Motion Analysis</p>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <input type="text" id="username" required placeholder="Username"
+            class="w-full px-4 py-3 bg-navy-700/50 border border-gold-500/20 rounded-lg text-white placeholder-gray-500 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all" />
+        </div>
+        <div>
+          <input type="password" id="password" required placeholder="Password"
+            class="w-full px-4 py-3 bg-navy-700/50 border border-gold-500/20 rounded-lg text-white placeholder-gray-500 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all" />
+        </div>
+        <div id="loginError" class="hidden text-red-400 text-sm text-center"></div>
+        <button type="submit" class="w-full btn-primary font-semibold py-3 rounded-lg">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="mainContent" class="hidden">
+    <!-- Header -->
+    <header class="bg-navy-700/80 backdrop-blur-xl border-b border-gold-500/20 sticky top-0 z-40 shadow-lg">
+      <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <a href="/" class="flex items-center gap-3">
+            <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-8 logo-glow"
+              onerror="this.outerHTML='<span class=\'text-xl font-bold gradient-text\'>Sindh Police</span>'" />
+            <div>
+              <h1 class="text-lg font-bold text-white">Voice Recording Vote</h1>
+              <p class="text-xs text-gray-300">Async Motion Analysis</p>
+            </div>
+          </a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/" class="text-white/80 hover:text-white text-sm flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+            Live Meeting
+          </a>
+          <a id="adminLink" href="/admin" class="hidden text-white/80 hover:text-white text-sm flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Documents
+          </a>
+          <button id="logoutBtn" class="text-white/80 hover:text-white p-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-6 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- Recording Section -->
+        <div class="glass-card rounded-xl p-6">
+          <h2 class="text-lg font-semibold text-black mb-2 flex items-center gap-2">
+            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+            Record Motion
+          </h2>
+          <p class="text-black/60 text-sm mb-6">Describe the motion and its proposed changes. The AI will analyze and
+            vote.</p>
+
+          <!-- Recording Visualization -->
+          <div id="recordingVisual" class="bg-white/50 rounded-xl p-8 mb-6 border border-gray-300/10">
+            <!-- Idle State -->
+            <div id="idleState" class="text-center">
+              <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-pvara-teal/20 flex items-center justify-center">
+                <svg class="w-12 h-12 text-pvara-teal/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
               </div>
-            </a>
+              <p class="text-black/50 text-sm">Click the button below to start recording</p>
+            </div>
+
+            <!-- Recording State -->
+            <div id="recordingState" class="hidden text-center">
+              <div
+                class="w-24 h-24 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center recording-pulse">
+                <div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="6" />
+                  </svg>
+                </div>
+              </div>
+              <p class="text-red-400 font-medium mb-1">Recording...</p>
+              <p id="recordingDuration" class="text-black/50 text-sm font-mono">00:00</p>
+
+              <!-- Waveform -->
+              <div class="flex items-center justify-center gap-1 h-12 mt-4">
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.1s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.2s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.3s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.4s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.5s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.6s;"></div>
+                <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.7s;"></div>
+              </div>
+            </div>
+
+            <!-- Recorded State -->
+            <div id="recordedState" class="hidden text-center">
+              <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
+                <svg class="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <p class="text-green-400 font-medium mb-1">Recording Complete</p>
+              <p id="recordedDuration" class="text-black/50 text-sm">Duration: 00:00</p>
+
+              <!-- Audio Player -->
+              <audio id="audioPlayer" controls class="w-full mt-4"></audio>
+            </div>
           </div>
-          <div class="flex items-center gap-4">
-            <a href="/" class="text-white/80 hover:text-white text-sm flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-              </svg>
-              Live Meeting
-            </a>
-            <a id="adminLink" href="/admin" class="hidden text-white/80 hover:text-white text-sm flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Documents
-            </a>
-            <button id="logoutBtn" class="text-white/80 hover:text-white p-2">
+
+          <!-- Control Buttons -->
+          <div class="flex gap-3">
+            <button id="recordBtn"
+              class="flex-1 btn-record text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+              </svg>
+              <span id="recordBtnText">Start Recording</span>
+            </button>
+
+            <button id="clearBtn"
+              class="hidden px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
             </button>
           </div>
-        </div>
-      </header>
 
-      <!-- Content -->
-      <main class="max-w-4xl mx-auto px-6 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          <!-- Recording Section -->
-          <div class="glass-card rounded-xl p-6">
-            <h2 class="text-lg font-semibold text-black mb-2 flex items-center gap-2">
+          <!-- Submit Button -->
+          <button id="submitBtn" disabled
+            class="w-full mt-4 btn-primary disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Analyze & Vote
+          </button>
+
+          <!-- Processing Status -->
+          <div id="processingStatus" class="hidden mt-4 text-center">
+            <div class="animate-spin w-8 h-8 mx-auto mb-2 border-2 border-gray-300 border-t-transparent rounded-full">
+            </div>
+            <p id="statusText" class="text-black/80 text-sm">Processing...</p>
+          </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="space-y-6">
+          <!-- Transcription -->
+          <div id="transcriptionCard" class="hidden glass-card rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Record Motion
+              Transcription
             </h2>
-            <p class="text-black/60 text-sm mb-6">Describe the motion and its proposed changes. The AI will analyze and vote.</p>
-
-            <!-- Recording Visualization -->
-            <div id="recordingVisual" class="bg-white/50 rounded-xl p-8 mb-6 border border-gray-300/10">
-              <!-- Idle State -->
-              <div id="idleState" class="text-center">
-                <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-pvara-teal/20 flex items-center justify-center">
-                  <svg class="w-12 h-12 text-pvara-teal/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                  </svg>
-                </div>
-                <p class="text-black/50 text-sm">Click the button below to start recording</p>
-              </div>
-
-              <!-- Recording State -->
-              <div id="recordingState" class="hidden text-center">
-                <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center recording-pulse">
-                  <div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="6" />
-                    </svg>
-                  </div>
-                </div>
-                <p class="text-red-400 font-medium mb-1">Recording...</p>
-                <p id="recordingDuration" class="text-black/50 text-sm font-mono">00:00</p>
-                
-                <!-- Waveform -->
-                <div class="flex items-center justify-center gap-1 h-12 mt-4">
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.1s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.2s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.3s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.4s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.5s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.6s;"></div>
-                  <div class="w-1 bg-red-400 rounded-full wave-bar" style="animation-delay: 0.7s;"></div>
-                </div>
-              </div>
-
-              <!-- Recorded State -->
-              <div id="recordedState" class="hidden text-center">
-                <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <svg class="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p class="text-green-400 font-medium mb-1">Recording Complete</p>
-                <p id="recordedDuration" class="text-black/50 text-sm">Duration: 00:00</p>
-                
-                <!-- Audio Player -->
-                <audio id="audioPlayer" controls class="w-full mt-4"></audio>
-              </div>
-            </div>
-
-            <!-- Control Buttons -->
-            <div class="flex gap-3">
-              <button id="recordBtn" class="flex-1 btn-record text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                </svg>
-                <span id="recordBtnText">Start Recording</span>
-              </button>
-              
-              <button id="clearBtn" class="hidden px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
-            </div>
-
-            <!-- Submit Button -->
-            <button id="submitBtn" disabled class="w-full mt-4 btn-primary disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Analyze & Vote
-            </button>
-
-            <!-- Processing Status -->
-            <div id="processingStatus" class="hidden mt-4 text-center">
-              <div class="animate-spin w-8 h-8 mx-auto mb-2 border-2 border-gray-300 border-t-transparent rounded-full"></div>
-              <p id="statusText" class="text-black/80 text-sm">Processing...</p>
+            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+              <p id="transcriptionText" class="text-white text-sm leading-relaxed"></p>
             </div>
           </div>
 
-          <!-- Results Section -->
-          <div class="space-y-6">
-            <!-- Transcription -->
-            <div id="transcriptionCard" class="hidden glass-card rounded-xl p-6">
-              <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Transcription
-              </h2>
+          <!-- Vote Result -->
+          <div id="voteResultCard" class="hidden glass-card rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              AI Board Member Vote
+            </h2>
+
+            <!-- Vote Badge -->
+            <div class="text-center mb-6">
+              <span id="voteBadge" class="inline-block text-3xl font-bold px-8 py-3 rounded-xl"></span>
+            </div>
+
+            <!-- Vote Details -->
+            <div class="space-y-4 text-sm">
+              <div class="bg-white/50 rounded-lg p-4 border border-pvara-gold/20">
+                <span class="text-pvara-gold block mb-2 font-medium">Motion Summary:</span>
+                <p id="voteMotion" class="text-white leading-relaxed font-medium"></p>
+              </div>
               <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                <p id="transcriptionText" class="text-white text-sm leading-relaxed"></p>
+                <span class="text-black/60 block mb-2 font-medium">Reasoning:</span>
+                <p id="voteReasoning" class="text-white leading-relaxed"></p>
+              </div>
+              <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+                <span class="text-black/60 block mb-2 font-medium">Policy Reference:</span>
+                <p id="voteReference" class="text-black"></p>
+              </div>
+              <div id="riskSection" class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+                <span class="text-black/60 block mb-2 font-medium">Risk Assessment:</span>
+                <p id="voteRisk" class="text-pvara-gold"></p>
               </div>
             </div>
 
-            <!-- Vote Result -->
-            <div id="voteResultCard" class="hidden glass-card rounded-xl p-6">
-              <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-                AI Board Member Vote
-              </h2>
-
-              <!-- Vote Badge -->
-              <div class="text-center mb-6">
-                <span id="voteBadge" class="inline-block text-3xl font-bold px-8 py-3 rounded-xl"></span>
-              </div>
-
-              <!-- Vote Details -->
-              <div class="space-y-4 text-sm">
-                <div class="bg-white/50 rounded-lg p-4 border border-pvara-gold/20">
-                  <span class="text-pvara-gold block mb-2 font-medium">Motion Summary:</span>
-                  <p id="voteMotion" class="text-white leading-relaxed font-medium"></p>
-                </div>
-                <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                  <span class="text-black/60 block mb-2 font-medium">Reasoning:</span>
-                  <p id="voteReasoning" class="text-white leading-relaxed"></p>
-                </div>
-                <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                  <span class="text-black/60 block mb-2 font-medium">Policy Reference:</span>
-                  <p id="voteReference" class="text-black"></p>
-                </div>
-                <div id="riskSection" class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                  <span class="text-black/60 block mb-2 font-medium">Risk Assessment:</span>
-                  <p id="voteRisk" class="text-pvara-gold"></p>
-                </div>
-              </div>
-
-              <div class="mt-4 pt-4 border-t border-gray-300/20 text-xs text-gray-500 text-center">
-                <span id="voteTimestamp"></span>
-              </div>
+            <div class="mt-4 pt-4 border-t border-gray-300/20 text-xs text-gray-500 text-center">
+              <span id="voteTimestamp"></span>
             </div>
+          </div>
 
-            <!-- Instructions -->
-            <div class="glass-card rounded-xl p-6">
-              <h2 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                How to Use
-              </h2>
-              <ol class="space-y-3 text-sm text-black/70">
-                <li class="flex items-start gap-3">
-                  <span class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">1</span>
-                  <span>Click <strong class="text-white">"Start Recording"</strong> and describe the motion or proposal</span>
-                </li>
-                <li class="flex items-start gap-3">
-                  <span class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">2</span>
-                  <span>Click <strong class="text-white">"Stop Recording"</strong> when finished</span>
-                </li>
-                <li class="flex items-start gap-3">
-                  <span class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">3</span>
-                  <span>Review the recording using the audio player</span>
-                </li>
-                <li class="flex items-start gap-3">
-                  <span class="w-6 h-6 bg-pvara-gold/20 rounded-full flex items-center justify-center text-pvara-gold text-xs font-bold flex-shrink-0">4</span>
-                  <span>Click <strong class="text-white">"Analyze & Vote"</strong> for AI analysis</span>
-                </li>
-              </ol>
-            </div>
+          <!-- Instructions -->
+          <div class="glass-card rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+              <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              How to Use
+            </h2>
+            <ol class="space-y-3 text-sm text-black/70">
+              <li class="flex items-start gap-3">
+                <span
+                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">1</span>
+                <span>Click <strong class="text-white">"Start Recording"</strong> and describe the motion or
+                  proposal</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">2</span>
+                <span>Click <strong class="text-white">"Stop Recording"</strong> when finished</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">3</span>
+                <span>Review the recording using the audio player</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span
+                  class="w-6 h-6 bg-pvara-gold/20 rounded-full flex items-center justify-center text-pvara-gold text-xs font-bold flex-shrink-0">4</span>
+                <span>Click <strong class="text-white">"Analyze & Vote"</strong> for AI analysis</span>
+              </li>
+            </ol>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
+  </div>
 
-    <script>
-      let authToken = null;
-      let recordingStartTime = null;
-      let durationInterval = null;
-      let audioBlob = null;
+  <script>
+    let authToken = null;
+    let recordingStartTime = null;
+    let durationInterval = null;
+    let audioBlob = null;
 
-      // DOM Elements
-      const recordBtn = document.getElementById('recordBtn');
-      const recordBtnText = document.getElementById('recordBtnText');
-      const clearBtn = document.getElementById('clearBtn');
-      const submitBtn = document.getElementById('submitBtn');
-      const idleState = document.getElementById('idleState');
-      const recordingState = document.getElementById('recordingState');
-      const recordedState = document.getElementById('recordedState');
-      const recordingDuration = document.getElementById('recordingDuration');
-      const recordedDuration = document.getElementById('recordedDuration');
-      const audioPlayer = document.getElementById('audioPlayer');
-      const processingStatus = document.getElementById('processingStatus');
-      const statusText = document.getElementById('statusText');
+    // DOM Elements
+    const recordBtn = document.getElementById('recordBtn');
+    const recordBtnText = document.getElementById('recordBtnText');
+    const clearBtn = document.getElementById('clearBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const idleState = document.getElementById('idleState');
+    const recordingState = document.getElementById('recordingState');
+    const recordedState = document.getElementById('recordedState');
+    const recordingDuration = document.getElementById('recordingDuration');
+    const recordedDuration = document.getElementById('recordedDuration');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const processingStatus = document.getElementById('processingStatus');
+    const statusText = document.getElementById('statusText');
 
-      // Check session
-      function checkSession() {
-        const token = localStorage.getItem('pvara_token');
-        const user = localStorage.getItem('pvara_user');
-        
-        if (token && user) {
-          authToken = token;
-          showMainContent();
-          return;
-        }
-        document.getElementById('loginModal').style.display = 'flex';
+    // Check session
+    function checkSession() {
+      const token = localStorage.getItem('pvara_token');
+      const user = localStorage.getItem('pvara_user');
+
+      if (token && user) {
+        authToken = token;
+        showMainContent();
+        return;
       }
+      document.getElementById('loginModal').style.display = 'flex';
+    }
 
-      // Login
-      document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-        try {
-          const response = await fetch('/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-          });
+      try {
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
 
-          const data = await response.json();
+        const data = await response.json();
 
-          if (response.ok && data.success) {
-            authToken = data.token;
-            localStorage.setItem('pvara_token', authToken);
-            localStorage.setItem('pvara_user', JSON.stringify(data.user));
-            showMainContent();
-          } else {
-            document.getElementById('loginError').textContent = data.detail || 'Invalid credentials';
-            document.getElementById('loginError').classList.remove('hidden');
-          }
-        } catch (error) {
-          document.getElementById('loginError').textContent = 'Connection error';
+        if (response.ok && data.success) {
+          authToken = data.token;
+          localStorage.setItem('pvara_token', authToken);
+          localStorage.setItem('pvara_user', JSON.stringify(data.user));
+          showMainContent();
+        } else {
+          document.getElementById('loginError').textContent = data.detail || 'Invalid credentials';
           document.getElementById('loginError').classList.remove('hidden');
         }
-      });
-
-      function showMainContent() {
-        document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('mainContent').classList.remove('hidden');
-        
-        // Show admin link for admin/secretary users
-        const userStr = localStorage.getItem('pvara_user');
-        if (userStr) {
-          try {
-            const user = JSON.parse(userStr);
-            if (user.role === 'admin' || user.role === 'secretary') {
-              document.getElementById('adminLink').classList.remove('hidden');
-            }
-          } catch (e) {}
-        }
+      } catch (error) {
+        document.getElementById('loginError').textContent = 'Connection error';
+        document.getElementById('loginError').classList.remove('hidden');
       }
+    });
 
-      // Logout
-      document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem('pvara_token');
-        localStorage.removeItem('pvara_user');
-        location.reload();
-      });
+    function showMainContent() {
+      document.getElementById('loginModal').style.display = 'none';
+      document.getElementById('mainContent').classList.remove('hidden');
 
-      let isRecording = false;
-
-      // Recording functionality
-      recordBtn.addEventListener('click', async () => {
-        if (isRecording) {
-          isRecording = false;
-          stopRecording();
-        } else {
-          // Stop any playing audio before starting new recording
-          audioPlayer.pause();
-          audioPlayer.currentTime = 0;
-          
-          isRecording = true;
-          startRecording();
-        }
-      });
-
-      // Audio context for WAV conversion
-      let audioContext = null;
-      let audioStream = null;
-      let audioProcessor = null;
-      let audioChunksRaw = [];
-
-      // Convert Float32Array to WAV format
-      function encodeWAV(samples, sampleRate) {
-        const buffer = new ArrayBuffer(44 + samples.length * 2);
-        const view = new DataView(buffer);
-        
-        // WAV header
-        writeString(view, 0, 'RIFF');
-        view.setUint32(4, 36 + samples.length * 2, true);
-        writeString(view, 8, 'WAVE');
-        writeString(view, 12, 'fmt ');
-        view.setUint32(16, 16, true); // Subchunk1Size
-        view.setUint16(20, 1, true); // AudioFormat (PCM)
-        view.setUint16(22, 1, true); // NumChannels (Mono)
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * 2, true); // ByteRate
-        view.setUint16(32, 2, true); // BlockAlign
-        view.setUint16(34, 16, true); // BitsPerSample
-        writeString(view, 36, 'data');
-        view.setUint32(40, samples.length * 2, true);
-        
-        // Write PCM samples
-        floatTo16BitPCM(view, 44, samples);
-        
-        return new Blob([buffer], { type: 'audio/wav' });
-      }
-
-      function writeString(view, offset, string) {
-        for (let i = 0; i < string.length; i++) {
-          view.setUint8(offset + i, string.charCodeAt(i));
-        }
-      }
-
-      function floatTo16BitPCM(view, offset, input) {
-        for (let i = 0; i < input.length; i++, offset += 2) {
-          const s = Math.max(-1, Math.min(1, input[i]));
-          view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-        }
-      }
-
-      async function startRecording() {
+      // Show admin link for admin/secretary users
+      const userStr = localStorage.getItem('pvara_user');
+      if (userStr) {
         try {
-          audioStream = await navigator.mediaDevices.getUserMedia({ 
-            audio: { 
-              sampleRate: 16000,
-              channelCount: 1,
-              echoCancellation: true,
-              noiseSuppression: true
-            } 
-          });
-          
-          audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-          const source = audioContext.createMediaStreamSource(audioStream);
-          
-          // Use ScriptProcessor for raw audio data
-          audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
-          audioChunksRaw = [];
-          
-          audioProcessor.onaudioprocess = (e) => {
-            const inputData = e.inputBuffer.getChannelData(0);
-            audioChunksRaw.push(new Float32Array(inputData));
-          };
-          
-          source.connect(audioProcessor);
-          audioProcessor.connect(audioContext.destination);
-          
-          recordingStartTime = Date.now();
-          
-          // Update duration
-          durationInterval = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
-            const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
-            const secs = (elapsed % 60).toString().padStart(2, '0');
-            recordingDuration.textContent = `${mins}:${secs}`;
-          }, 1000);
-
-          showRecordingState();
-        } catch (error) {
-          console.error('Error starting recording:', error);
-          alert('Could not access microphone. Please check permissions.');
-        }
+          const user = JSON.parse(userStr);
+          if (user.role === 'admin' || user.role === 'secretary') {
+            document.getElementById('adminLink').classList.remove('hidden');
+          }
+        } catch (e) { }
       }
+    }
 
-      function stopRecording() {
-        clearInterval(durationInterval);
-        
-        // Stop the audio processor
-        if (audioProcessor) {
-          audioProcessor.disconnect();
-          audioProcessor = null;
-        }
-        
-        // Stop audio stream
-        if (audioStream) {
-          audioStream.getTracks().forEach(track => track.stop());
-        }
-        
-        // Merge all audio chunks into single buffer
-        const totalLength = audioChunksRaw.reduce((acc, chunk) => acc + chunk.length, 0);
-        const mergedBuffer = new Float32Array(totalLength);
-        let offset = 0;
-        for (const chunk of audioChunksRaw) {
-          mergedBuffer.set(chunk, offset);
-          offset += chunk.length;
-        }
-        
-        // Create WAV blob
-        const sampleRate = audioContext ? audioContext.sampleRate : 16000;
-        audioBlob = encodeWAV(mergedBuffer, sampleRate);
-        
-        // Close audio context
-        if (audioContext) {
-          audioContext.close();
-          audioContext = null;
-        }
-        
-        // Set up audio player
-        const audioUrl = URL.createObjectURL(audioBlob);
-        audioPlayer.src = audioUrl;
-        
-        const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
-        const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
-        const secs = (elapsed % 60).toString().padStart(2, '0');
-        recordedDuration.textContent = `Duration: ${mins}:${secs}`;
-        
-        showRecordedState();
-      }
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('pvara_token');
+      localStorage.removeItem('pvara_user');
+      location.reload();
+    });
 
-      function showIdleState() {
+    let isRecording = false;
+
+    // Recording functionality
+    recordBtn.addEventListener('click', async () => {
+      if (isRecording) {
         isRecording = false;
-        idleState.classList.remove('hidden');
-        recordingState.classList.add('hidden');
-        recordedState.classList.add('hidden');
-        recordBtn.className = 'flex-1 btn-record text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all';
-        recordBtnText.textContent = 'Start Recording';
-        clearBtn.classList.add('hidden');
-        submitBtn.disabled = true;
-        audioBlob = null;
+        stopRecording();
+      } else {
+        // Stop any playing audio before starting new recording
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+
+        isRecording = true;
+        startRecording();
+      }
+    });
+
+    // Audio context for WAV conversion
+    let audioContext = null;
+    let audioStream = null;
+    let audioProcessor = null;
+    let audioChunksRaw = [];
+
+    // Convert Float32Array to WAV format
+    function encodeWAV(samples, sampleRate) {
+      const buffer = new ArrayBuffer(44 + samples.length * 2);
+      const view = new DataView(buffer);
+
+      // WAV header
+      writeString(view, 0, 'RIFF');
+      view.setUint32(4, 36 + samples.length * 2, true);
+      writeString(view, 8, 'WAVE');
+      writeString(view, 12, 'fmt ');
+      view.setUint32(16, 16, true); // Subchunk1Size
+      view.setUint16(20, 1, true); // AudioFormat (PCM)
+      view.setUint16(22, 1, true); // NumChannels (Mono)
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true); // ByteRate
+      view.setUint16(32, 2, true); // BlockAlign
+      view.setUint16(34, 16, true); // BitsPerSample
+      writeString(view, 36, 'data');
+      view.setUint32(40, samples.length * 2, true);
+
+      // Write PCM samples
+      floatTo16BitPCM(view, 44, samples);
+
+      return new Blob([buffer], { type: 'audio/wav' });
+    }
+
+    function writeString(view, offset, string) {
+      for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+      }
+    }
+
+    function floatTo16BitPCM(view, offset, input) {
+      for (let i = 0; i < input.length; i++, offset += 2) {
+        const s = Math.max(-1, Math.min(1, input[i]));
+        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+      }
+    }
+
+    async function startRecording() {
+      try {
+        audioStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 16000,
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true
+          }
+        });
+
+        audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+        const source = audioContext.createMediaStreamSource(audioStream);
+
+        // Use ScriptProcessor for raw audio data
+        audioProcessor = audioContext.createScriptProcessor(4096, 1, 1);
         audioChunksRaw = [];
+
+        audioProcessor.onaudioprocess = (e) => {
+          const inputData = e.inputBuffer.getChannelData(0);
+          audioChunksRaw.push(new Float32Array(inputData));
+        };
+
+        source.connect(audioProcessor);
+        audioProcessor.connect(audioContext.destination);
+
+        recordingStartTime = Date.now();
+
+        // Update duration
+        durationInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+          const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+          const secs = (elapsed % 60).toString().padStart(2, '0');
+          recordingDuration.textContent = `${mins}:${secs}`;
+        }, 1000);
+
+        showRecordingState();
+      } catch (error) {
+        console.error('Error starting recording:', error);
+        alert('Could not access microphone. Please check permissions.');
+      }
+    }
+
+    function stopRecording() {
+      clearInterval(durationInterval);
+
+      // Stop the audio processor
+      if (audioProcessor) {
+        audioProcessor.disconnect();
+        audioProcessor = null;
       }
 
-      function showRecordingState() {
-        idleState.classList.add('hidden');
-        recordingState.classList.remove('hidden');
-        recordedState.classList.add('hidden');
-        recordBtn.className = 'flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all';
-        recordBtnText.textContent = 'Stop Recording';
-        clearBtn.classList.add('hidden');
-        submitBtn.disabled = true;
+      // Stop audio stream
+      if (audioStream) {
+        audioStream.getTracks().forEach(track => track.stop());
       }
 
-      function showRecordedState() {
-        idleState.classList.add('hidden');
-        recordingState.classList.add('hidden');
-        recordedState.classList.remove('hidden');
-        recordBtn.className = 'flex-1 btn-record text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all';
-        recordBtnText.textContent = 'Record Again';
-        clearBtn.classList.remove('hidden');
+      // Merge all audio chunks into single buffer
+      const totalLength = audioChunksRaw.reduce((acc, chunk) => acc + chunk.length, 0);
+      const mergedBuffer = new Float32Array(totalLength);
+      let offset = 0;
+      for (const chunk of audioChunksRaw) {
+        mergedBuffer.set(chunk, offset);
+        offset += chunk.length;
+      }
+
+      // Create WAV blob
+      const sampleRate = audioContext ? audioContext.sampleRate : 16000;
+      audioBlob = encodeWAV(mergedBuffer, sampleRate);
+
+      // Close audio context
+      if (audioContext) {
+        audioContext.close();
+        audioContext = null;
+      }
+
+      // Set up audio player
+      const audioUrl = URL.createObjectURL(audioBlob);
+      audioPlayer.src = audioUrl;
+
+      const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+      const mins = Math.floor(elapsed / 60).toString().padStart(2, '0');
+      const secs = (elapsed % 60).toString().padStart(2, '0');
+      recordedDuration.textContent = `Duration: ${mins}:${secs}`;
+
+      showRecordedState();
+    }
+
+    function showIdleState() {
+      isRecording = false;
+      idleState.classList.remove('hidden');
+      recordingState.classList.add('hidden');
+      recordedState.classList.add('hidden');
+      recordBtn.className = 'flex-1 btn-record text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all';
+      recordBtnText.textContent = 'Start Recording';
+      clearBtn.classList.add('hidden');
+      submitBtn.disabled = true;
+      audioBlob = null;
+      audioChunksRaw = [];
+    }
+
+    function showRecordingState() {
+      idleState.classList.add('hidden');
+      recordingState.classList.remove('hidden');
+      recordedState.classList.add('hidden');
+      recordBtn.className = 'flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all';
+      recordBtnText.textContent = 'Stop Recording';
+      clearBtn.classList.add('hidden');
+      submitBtn.disabled = true;
+    }
+
+    function showRecordedState() {
+      idleState.classList.add('hidden');
+      recordingState.classList.add('hidden');
+      recordedState.classList.remove('hidden');
+      recordBtn.className = 'flex-1 btn-record text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all';
+      recordBtnText.textContent = 'Record Again';
+      clearBtn.classList.remove('hidden');
+      submitBtn.disabled = false;
+    }
+
+    clearBtn.addEventListener('click', () => {
+      showIdleState();
+      document.getElementById('transcriptionCard').classList.add('hidden');
+      document.getElementById('voteResultCard').classList.add('hidden');
+    });
+
+    // Submit for analysis
+    submitBtn.addEventListener('click', async () => {
+      if (!audioBlob) return;
+
+      submitBtn.disabled = true;
+      processingStatus.classList.remove('hidden');
+
+      try {
+        // Step 1: Transcribe
+        statusText.textContent = 'Transcribing audio...';
+
+        const formData = new FormData();
+        // Audio is recorded as WAV for maximum compatibility with Whisper
+        formData.append('audio', audioBlob, 'recording.wav');
+
+        const response = await fetch('/api/vote/record', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${authToken}` },
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Show transcription
+          document.getElementById('transcriptionText').textContent = data.transcription;
+          document.getElementById('transcriptionCard').classList.remove('hidden');
+
+          // Show vote result
+          displayVoteResult(data.vote);
+        } else {
+          throw new Error(data.detail || 'Analysis failed');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error: ' + error.message);
+      } finally {
+        processingStatus.classList.add('hidden');
         submitBtn.disabled = false;
       }
+    });
 
-      clearBtn.addEventListener('click', () => {
-        showIdleState();
-        document.getElementById('transcriptionCard').classList.add('hidden');
-        document.getElementById('voteResultCard').classList.add('hidden');
-      });
+    function displayVoteResult(voteData) {
+      const vote = voteData.vote;
+      const voteBadge = document.getElementById('voteBadge');
+      const voteResultCard = document.getElementById('voteResultCard');
 
-      // Submit for analysis
-      submitBtn.addEventListener('click', async () => {
-        if (!audioBlob) return;
-
-        submitBtn.disabled = true;
-        processingStatus.classList.remove('hidden');
-        
-        try {
-          // Step 1: Transcribe
-          statusText.textContent = 'Transcribing audio...';
-          
-          const formData = new FormData();
-          // Audio is recorded as WAV for maximum compatibility with Whisper
-          formData.append('audio', audioBlob, 'recording.wav');
-
-          const response = await fetch('/api/vote/record', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${authToken}` },
-            body: formData
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-            // Show transcription
-            document.getElementById('transcriptionText').textContent = data.transcription;
-            document.getElementById('transcriptionCard').classList.remove('hidden');
-
-            // Show vote result
-            displayVoteResult(data.vote);
-          } else {
-            throw new Error(data.detail || 'Analysis failed');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Error: ' + error.message);
-        } finally {
-          processingStatus.classList.add('hidden');
-          submitBtn.disabled = false;
-        }
-      });
-
-      function displayVoteResult(voteData) {
-        const vote = voteData.vote;
-        const voteBadge = document.getElementById('voteBadge');
-        const voteResultCard = document.getElementById('voteResultCard');
-
-        let bgClass, textClass;
-        if (vote === 'FOR') {
-          bgClass = 'bg-vote-for/20';
-          textClass = 'text-vote-for';
-        } else if (vote === 'AGAINST') {
-          bgClass = 'bg-vote-against/20';
-          textClass = 'text-vote-against';
-        } else {
-          bgClass = 'bg-vote-abstain/20';
-          textClass = 'text-vote-abstain';
-        }
-
-        voteBadge.textContent = vote;
-        voteBadge.className = `inline-block text-3xl font-bold px-8 py-3 rounded-xl ${bgClass} ${textClass}`;
-
-        document.getElementById('voteMotion').textContent = voteData.motion_summary || '';
-        document.getElementById('voteReasoning').textContent = voteData.reasoning || '';
-        document.getElementById('voteReference').textContent = voteData.regulatory_reference || '';
-        
-        if (voteData.risk_assessment) {
-          document.getElementById('riskSection').classList.remove('hidden');
-          document.getElementById('voteRisk').textContent = voteData.risk_assessment;
-        } else {
-          document.getElementById('riskSection').classList.add('hidden');
-        }
-
-        document.getElementById('voteTimestamp').textContent = `Analyzed at ${new Date().toLocaleString()}`;
-        voteResultCard.classList.remove('hidden');
+      let bgClass, textClass;
+      if (vote === 'FOR') {
+        bgClass = 'bg-vote-for/20';
+        textClass = 'text-vote-for';
+      } else if (vote === 'AGAINST') {
+        bgClass = 'bg-vote-against/20';
+        textClass = 'text-vote-against';
+      } else {
+        bgClass = 'bg-vote-abstain/20';
+        textClass = 'text-vote-abstain';
       }
 
-      // Initialize
-      checkSession();
-    </script>
-  </body>
-</html>
+      voteBadge.textContent = vote;
+      voteBadge.className = `inline-block text-3xl font-bold px-8 py-3 rounded-xl ${bgClass} ${textClass}`;
 
+      document.getElementById('voteMotion').textContent = voteData.motion_summary || '';
+      document.getElementById('voteReasoning').textContent = voteData.reasoning || '';
+      document.getElementById('voteReference').textContent = voteData.regulatory_reference || '';
+
+      if (voteData.risk_assessment) {
+        document.getElementById('riskSection').classList.remove('hidden');
+        document.getElementById('voteRisk').textContent = voteData.risk_assessment;
+      } else {
+        document.getElementById('riskSection').classList.add('hidden');
+      }
+
+      document.getElementById('voteTimestamp').textContent = `Analyzed at ${new Date().toLocaleString()}`;
+      voteResultCard.classList.remove('hidden');
+    }
+
+    // Initialize
+    checkSession();
+  </script>
+</body>
+
+</html>

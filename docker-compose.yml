@@ -1,0 +1,38 @@
+# Sindh Police AI Meeting Member - Docker Compose Configuration
+# Usage: docker-compose up -d
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sindh-police-meeting-member
+    ports:
+      - "6083:6083"
+    environment:
+      # OpenAI Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # Pinecone Configuration
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - INDEX_NAME=${INDEX_NAME:-pvara-docs}
+      # JWT Configuration
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-sindh-police-ai-meeting-member-secret-key-2024}
+      # Application Configuration
+      - PORT=6083
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount documents folder for document ingestion
+      - ./documents:/app/documents:ro
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:6083/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,67 @@
+# Sindh Police AI Meeting Member - Docker Ignore File
+# Prevents unnecessary files from being included in Docker builds
+
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv
+venv/
+ENV/
+env/
+.mypy_cache
+.pytest_cache
+*.egg-info/
+dist/
+build/
+
+# Environment files (handled separately)
+.env
+.env.local
+.env.*.local
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentation
+*.md
+!README.md
+docs/
+
+# Testing
+tests/
+test_*.py
+*_test.py
+coverage/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Gemini/Agent artifacts
+.gemini/
+.agent/
+
+# Miscellaneous
+*.bak
+*.tmp
+tmp/
+temp/

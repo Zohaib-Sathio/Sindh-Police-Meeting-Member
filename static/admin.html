@@ -1,360 +1,438 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sindh Police - Document Management</title>
 
-    <link rel="icon" href="/client/pvara.png" type="image/png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sindh Police - Document Management</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              "pvara-green": "#000000",
-              "pvara-teal": "#333333",
-              "pvara-mint": "#000000",
-              "pvara-gold": "#666666",
-              "pvara-dark": "#1a1a1a",
-              "pvara-darker": "#000000",
+  <link rel="icon" href="/client/pvara.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "navy": {
+              500: "#1e3a5f",
+              600: "#0f2847",
+              700: "#0a1628",
             },
-            fontFamily: {
-              sans: ["Plus Jakarta Sans", "sans-serif"],
+            "gold": {
+              300: "#fad969",
+              400: "#f8cb47",
+              500: "#d4af37",
+              600: "#c4a000",
             },
+            "pvara-green": "#10b981",
+            "pvara-teal": "#1e3a5f",
+            "pvara-mint": "#10b981",
+            "pvara-gold": "#d4af37",
+            "pvara-dark": "#0f2847",
+            "pvara-darker": "#0a1628",
+          },
+          fontFamily: {
+            sans: ["Inter", "Plus Jakarta Sans", "sans-serif"],
           },
         },
-      };
-    </script>
-    <style>
-      body {
-        font-family: "Plus Jakarta Sans", sans-serif;
-        background: #f9fafb;
-        min-height: 100vh;
-      }
-      .glass-card {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        border-radius: 0.75rem;
-      }
-      .gradient-text {
-        background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-weight: 700;
-      }
-      .upload-zone {
-        border: 2px dashed #d1d5db;
-        transition: all 0.3s ease;
-      }
-      .upload-zone:hover, .upload-zone.drag-over {
-        border-color: #22c55e;
-        background: #f0fdf4;
-      }
-      .btn-primary {
-        background: #22c55e;
-        color: #ffffff;
-        box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
-        font-weight: 600;
-      }
-      .btn-primary:hover {
-        background: #16a34a;
-        box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
-        transform: translateY(-1px);
-      }
-    </style>
-  </head>
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: "Inter", "Plus Jakarta Sans", sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #0f2847 50%, #0a1628 100%);
+      min-height: 100vh;
+      color: #e8eef5;
+    }
 
-  <body class="text-black">
-    <!-- Login Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-      <div class="glass-card rounded-2xl max-w-md w-full p-8">
-        <div class="text-center mb-8">
-          <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-16 mx-auto mb-4" onerror="this.outerHTML='<h1 class=\'text-3xl font-bold gradient-text\'>Sindh Police</h1>'" />
-          <h2 class="text-xl font-semibold text-black mb-1">Document Management</h2>
-          <p class="text-sm text-black/60">Admin Access Required</p>
-        </div>
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(30, 58, 95, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(15, 40, 71, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        <form id="loginForm" class="space-y-4">
-          <div>
-            <input type="text" id="username" required placeholder="Username"
-              class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-black placeholder-gray-400 focus:border-black outline-none" />
-          </div>
-          <div>
-            <input type="password" id="password" required placeholder="Password"
-              class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-black placeholder-gray-400 focus:border-black outline-none" />
-          </div>
-          <div id="loginError" class="hidden text-red-400 text-sm text-center"></div>
-          <button type="submit" class="w-full btn-primary text-white font-semibold py-3 rounded-lg">Sign In</button>
-        </form>
+    .glass-card {
+      background: linear-gradient(135deg, rgba(15, 40, 71, 0.8) 0%, rgba(30, 58, 95, 0.6) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #d4af37 0%, #fad969 50%, #c4a000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .upload-zone {
+      border: 2px dashed rgba(212, 175, 55, 0.3);
+      background: rgba(10, 22, 40, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
+      border-color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d4af37 0%, #c4a000 100%);
+      color: #0a1628;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      font-weight: 600;
+      border: 1px solid rgba(250, 217, 105, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fad969 0%, #d4af37 100%);
+      box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:disabled {
+      background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+      box-shadow: none;
+      cursor: not-allowed;
+      color: #9ca3af;
+    }
+
+    .logo-glow {
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+    }
+  </style>
+</head>
+
+<body class="text-gray-100">
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl max-w-md w-full p-8 border border-gold-500/30">
+      <div class="text-center mb-8">
+        <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-16 mx-auto mb-4 logo-glow"
+          onerror="this.outerHTML='<h1 class=\'text-3xl font-bold gradient-text\'>Sindh Police</h1>'" />
+        <h2 class="text-xl font-semibold text-white mb-1">Document Management</h2>
+        <p class="text-sm text-gold-400">Admin Access Required</p>
       </div>
-    </div>
 
-    <!-- Main Content -->
-    <div id="mainContent" class="hidden">
-      <!-- Header -->
-      <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <a href="/" class="flex items-center gap-3">
-              <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-8" onerror="this.outerHTML='<span class=\'text-xl font-bold gradient-text\'>Sindh Police</span>'" />
-              <div>
-                <h1 class="text-lg font-bold text-white">Document Management</h1>
-                <p class="text-xs text-gray-300">Update Knowledge Base</p>
-              </div>
-            </a>
-          </div>
-          <div class="flex items-center gap-4">
-            <a href="/" class="text-white/80 hover:text-white text-sm flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Dashboard
-            </a>
-            <button id="logoutBtn" class="text-white/80 hover:text-white p-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-            </button>
-          </div>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <input type="text" id="username" required placeholder="Username"
+            class="w-full px-4 py-3 bg-navy-700/50 border border-gold-500/20 rounded-lg text-white placeholder-gray-500 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all" />
         </div>
-      </header>
+        <div>
+          <input type="password" id="password" required placeholder="Password"
+            class="w-full px-4 py-3 bg-navy-700/50 border border-gold-500/20 rounded-lg text-white placeholder-gray-500 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all" />
+        </div>
+        <div id="loginError" class="hidden text-red-400 text-sm text-center"></div>
+        <button type="submit" class="w-full btn-primary font-semibold py-3 rounded-lg">Sign In</button>
+      </form>
+    </div>
+  </div>
 
-      <!-- Content -->
-      <main class="max-w-6xl mx-auto px-6 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          <!-- Upload Section -->
-          <div class="glass-card rounded-xl p-6">
-            <h2 class="text-lg font-semibold text-black mb-4 flex items-center gap-2">
-              <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+  <!-- Main Content -->
+  <div id="mainContent" class="hidden">
+    <!-- Header -->
+    <header class="bg-navy-700/80 backdrop-blur-xl border-b border-gold-500/20 sticky top-0 z-40 shadow-lg">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <a href="/" class="flex items-center gap-3">
+            <img src="/client/logo-with-title.png" alt="Sindh Police" class="h-8 logo-glow"
+              onerror="this.outerHTML='<span class=\'text-xl font-bold gradient-text\'>Sindh Police</span>'" />
+            <div>
+              <h1 class="text-lg font-bold gradient-text">Document Management</h1>
+              <p class="text-xs text-gold-400">Update Knowledge Base</p>
+            </div>
+          </a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/" class="text-gray-300 hover:text-gold-400 text-sm flex items-center gap-2 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Dashboard
+          </a>
+          <button id="logoutBtn" class="text-gray-300 hover:text-gold-400 p-2 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-6xl mx-auto px-6 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- Upload Section -->
+        <div class="glass-card rounded-xl p-6">
+          <h2 class="text-lg font-semibold text-black mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            Upload Documents
+          </h2>
+          <p class="text-black/60 text-sm mb-6">Upload PDF or DOCX files to update Sindh Police's operational knowledge
+            base.</p>
+
+          <!-- Upload Zone -->
+          <div id="uploadZone" class="upload-zone rounded-xl p-8 text-center cursor-pointer mb-4">
+            <input type="file" id="fileInput" accept=".pdf,.docx" multiple class="hidden" />
+            <svg class="w-12 h-12 text-pvara-teal/50 mx-auto mb-4" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <p class="text-black/80 font-medium mb-1">Drop files here or click to browse</p>
+            <p class="text-black/50 text-sm">Supports PDF and DOCX files</p>
+          </div>
+
+          <!-- Selected Files -->
+          <div id="selectedFiles" class="hidden mb-4">
+            <h3 class="text-sm font-medium text-black/80 mb-2">Selected Files:</h3>
+            <div id="fileList" class="space-y-2"></div>
+          </div>
+
+          <!-- Upload Button -->
+          <button id="uploadBtn" disabled
+            class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            Upload & Process
+          </button>
+
+          <!-- Upload Progress -->
+          <div id="uploadProgress" class="hidden mt-4">
+            <div class="flex items-center justify-between text-sm mb-2">
+              <span class="text-black/80">Processing documents...</span>
+              <span id="progressPercent" class="text-pvara-gold">0%</span>
+            </div>
+            <div class="h-2 bg-white rounded-full overflow-hidden">
+              <div id="progressBar"
+                class="h-full bg-gradient-to-r from-pvara-teal to-pvara-gold transition-all duration-300"
+                style="width: 0%"></div>
+            </div>
+            <p id="progressStatus" class="text-xs text-black/50 mt-2"></p>
+          </div>
+
+          <!-- Upload Result -->
+          <div id="uploadResult" class="hidden mt-4 p-4 rounded-lg"></div>
+        </div>
+
+        <!-- Documents List -->
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-white flex items-center gap-2">
+              <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
-              Upload Documents
+              Knowledge Base
             </h2>
-            <p class="text-black/60 text-sm mb-6">Upload PDF or DOCX files to update Sindh Police's operational knowledge base.</p>
-
-            <!-- Upload Zone -->
-            <div id="uploadZone" class="upload-zone rounded-xl p-8 text-center cursor-pointer mb-4">
-              <input type="file" id="fileInput" accept=".pdf,.docx" multiple class="hidden" />
-              <svg class="w-12 h-12 text-pvara-teal/50 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <p class="text-black/80 font-medium mb-1">Drop files here or click to browse</p>
-              <p class="text-black/50 text-sm">Supports PDF and DOCX files</p>
-            </div>
-
-            <!-- Selected Files -->
-            <div id="selectedFiles" class="hidden mb-4">
-              <h3 class="text-sm font-medium text-black/80 mb-2">Selected Files:</h3>
-              <div id="fileList" class="space-y-2"></div>
-            </div>
-
-            <!-- Upload Button -->
-            <button id="uploadBtn" disabled class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2">
+            <button id="refreshBtn" class="text-black/60 hover:text-black p-2" title="Refresh">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              Upload & Process
             </button>
+          </div>
 
-            <!-- Upload Progress -->
-            <div id="uploadProgress" class="hidden mt-4">
-              <div class="flex items-center justify-between text-sm mb-2">
-                <span class="text-black/80">Processing documents...</span>
-                <span id="progressPercent" class="text-pvara-gold">0%</span>
-              </div>
-              <div class="h-2 bg-white rounded-full overflow-hidden">
-                <div id="progressBar" class="h-full bg-gradient-to-r from-pvara-teal to-pvara-gold transition-all duration-300" style="width: 0%"></div>
-              </div>
-              <p id="progressStatus" class="text-xs text-black/50 mt-2"></p>
+          <!-- Stats -->
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+              <p class="text-2xl font-bold text-black" id="totalDocs">-</p>
+              <p class="text-xs text-black/50">Documents</p>
             </div>
-
-            <!-- Upload Result -->
-            <div id="uploadResult" class="hidden mt-4 p-4 rounded-lg"></div>
+            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+              <p class="text-2xl font-bold text-pvara-gold" id="totalChunks">-</p>
+              <p class="text-xs text-black/50">Text Chunks</p>
+            </div>
           </div>
 
           <!-- Documents List -->
-          <div class="glass-card rounded-xl p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-lg font-semibold text-white flex items-center gap-2">
-                <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-                Knowledge Base
-              </h2>
-              <button id="refreshBtn" class="text-black/60 hover:text-black p-2" title="Refresh">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </button>
-            </div>
-
-            <!-- Stats -->
-            <div class="grid grid-cols-2 gap-4 mb-6">
-              <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                <p class="text-2xl font-bold text-black" id="totalDocs">-</p>
-                <p class="text-xs text-black/50">Documents</p>
-              </div>
-              <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                <p class="text-2xl font-bold text-pvara-gold" id="totalChunks">-</p>
-                <p class="text-xs text-black/50">Text Chunks</p>
-              </div>
-            </div>
-
-            <!-- Documents List -->
-            <div id="documentsList" class="space-y-2 max-h-[400px] overflow-y-auto">
-              <div class="text-center py-8 text-black/40">
-                <svg class="w-10 h-10 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <p>Loading documents...</p>
-              </div>
+          <div id="documentsList" class="space-y-2 max-h-[400px] overflow-y-auto">
+            <div class="text-center py-8 text-black/40">
+              <svg class="w-10 h-10 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p>Loading documents...</p>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Instructions -->
-        <div class="glass-card rounded-xl p-6 mt-8">
-          <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            How It Works
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-              <div class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">1</div>
-              <h3 class="font-medium text-white mb-1">Upload</h3>
-              <p class="text-black/50 text-xs">Select PDF or DOCX files containing Sindh Police policies, procedures, or operational guidelines.</p>
+      <!-- Instructions -->
+      <div class="glass-card rounded-xl p-6 mt-8">
+        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-pvara-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          How It Works
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+            <div
+              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">1
             </div>
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-              <div class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">2</div>
-              <h3 class="font-medium text-white mb-1">Extract</h3>
-              <p class="text-black/50 text-xs">System extracts text content and splits into manageable chunks.</p>
+            <h3 class="font-medium text-white mb-1">Upload</h3>
+            <p class="text-black/50 text-xs">Select PDF or DOCX files containing Sindh Police policies, procedures, or
+              operational guidelines.</p>
+          </div>
+          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+            <div
+              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">2
             </div>
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-              <div class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">3</div>
-              <h3 class="font-medium text-white mb-1">Embed</h3>
-              <p class="text-black/50 text-xs">Creates AI embeddings using OpenAI's text-embedding model.</p>
+            <h3 class="font-medium text-white mb-1">Extract</h3>
+            <p class="text-black/50 text-xs">System extracts text content and splits into manageable chunks.</p>
+          </div>
+          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+            <div
+              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">3
             </div>
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-              <div class="w-8 h-8 bg-pvara-gold/20 rounded-full flex items-center justify-center text-pvara-gold font-bold mb-3">4</div>
-              <h3 class="font-medium text-white mb-1">Store</h3>
-              <p class="text-black/50 text-xs">Embeddings stored in Pinecone for AI to reference during meetings.</p>
-            </div>
+            <h3 class="font-medium text-white mb-1">Embed</h3>
+            <p class="text-black/50 text-xs">Creates AI embeddings using OpenAI's text-embedding model.</p>
+          </div>
+          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+            <div
+              class="w-8 h-8 bg-pvara-gold/20 rounded-full flex items-center justify-center text-pvara-gold font-bold mb-3">
+              4</div>
+            <h3 class="font-medium text-white mb-1">Store</h3>
+            <p class="text-black/50 text-xs">Embeddings stored in Pinecone for AI to reference during meetings.</p>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
+  </div>
 
-    <script>
-      let authToken = null;
+  <script>
+    let authToken = null;
 
-      // Check session
-      function checkSession() {
-        const token = localStorage.getItem('pvara_token');
-        const user = localStorage.getItem('pvara_user');
-        
-        if (token && user) {
-          const userData = JSON.parse(user);
-          if (userData.role === 'admin' || userData.role === 'secretary') {
-            authToken = token;
-            showMainContent();
-            loadDocuments();
+    // Check session
+    function checkSession() {
+      const token = localStorage.getItem('pvara_token');
+      const user = localStorage.getItem('pvara_user');
+
+      if (token && user) {
+        const userData = JSON.parse(user);
+        if (userData.role === 'admin' || userData.role === 'secretary') {
+          authToken = token;
+          showMainContent();
+          loadDocuments();
+          return;
+        }
+      }
+      document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          if (data.user.role !== 'admin' && data.user.role !== 'secretary') {
+            document.getElementById('loginError').textContent = 'Admin or Secretary access required';
+            document.getElementById('loginError').classList.remove('hidden');
             return;
           }
-        }
-        document.getElementById('loginModal').style.display = 'flex';
-      }
-
-      // Login
-      document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        try {
-          const response = await fetch('/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-            if (data.user.role !== 'admin' && data.user.role !== 'secretary') {
-              document.getElementById('loginError').textContent = 'Admin or Secretary access required';
-              document.getElementById('loginError').classList.remove('hidden');
-              return;
-            }
-            authToken = data.token;
-            localStorage.setItem('pvara_token', authToken);
-            localStorage.setItem('pvara_user', JSON.stringify(data.user));
-            showMainContent();
-            loadDocuments();
-          } else {
-            document.getElementById('loginError').textContent = data.detail || 'Invalid credentials';
-            document.getElementById('loginError').classList.remove('hidden');
-          }
-        } catch (error) {
-          document.getElementById('loginError').textContent = 'Connection error';
+          authToken = data.token;
+          localStorage.setItem('pvara_token', authToken);
+          localStorage.setItem('pvara_user', JSON.stringify(data.user));
+          showMainContent();
+          loadDocuments();
+        } else {
+          document.getElementById('loginError').textContent = data.detail || 'Invalid credentials';
           document.getElementById('loginError').classList.remove('hidden');
         }
-      });
-
-      function showMainContent() {
-        document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('mainContent').classList.remove('hidden');
+      } catch (error) {
+        document.getElementById('loginError').textContent = 'Connection error';
+        document.getElementById('loginError').classList.remove('hidden');
       }
+    });
 
-      // Logout
-      document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem('pvara_token');
-        localStorage.removeItem('pvara_user');
-        location.reload();
-      });
+    function showMainContent() {
+      document.getElementById('loginModal').style.display = 'none';
+      document.getElementById('mainContent').classList.remove('hidden');
+    }
 
-      // File Upload
-      const uploadZone = document.getElementById('uploadZone');
-      const fileInput = document.getElementById('fileInput');
-      const uploadBtn = document.getElementById('uploadBtn');
-      let selectedFiles = [];
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('pvara_token');
+      localStorage.removeItem('pvara_user');
+      location.reload();
+    });
 
-      uploadZone.addEventListener('click', () => fileInput.click());
+    // File Upload
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    let selectedFiles = [];
 
-      uploadZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadZone.classList.add('drag-over');
-      });
+    uploadZone.addEventListener('click', () => fileInput.click());
 
-      uploadZone.addEventListener('dragleave', () => {
-        uploadZone.classList.remove('drag-over');
-      });
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
 
-      uploadZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadZone.classList.remove('drag-over');
-        handleFiles(e.dataTransfer.files);
-      });
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('drag-over');
+    });
 
-      fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      handleFiles(e.dataTransfer.files);
+    });
 
-      function handleFiles(files) {
-        selectedFiles = Array.from(files).filter(f => 
-          f.name.endsWith('.pdf') || f.name.endsWith('.docx')
-        );
-        
-        if (selectedFiles.length > 0) {
-          document.getElementById('selectedFiles').classList.remove('hidden');
-          document.getElementById('fileList').innerHTML = selectedFiles.map(f => `
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+    function handleFiles(files) {
+      selectedFiles = Array.from(files).filter(f =>
+        f.name.endsWith('.pdf') || f.name.endsWith('.docx')
+      );
+
+      if (selectedFiles.length > 0) {
+        document.getElementById('selectedFiles').classList.remove('hidden');
+        document.getElementById('fileList').innerHTML = selectedFiles.map(f => `
             <div class="flex items-center gap-2 text-sm bg-white/50 rounded-lg px-3 py-2">
               <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -363,38 +441,38 @@
               <span class="text-black/50 text-xs">${(f.size / 1024).toFixed(1)} KB</span>
             </div>
           `).join('');
-          uploadBtn.disabled = false;
-        } else {
-          document.getElementById('selectedFiles').classList.add('hidden');
-          uploadBtn.disabled = true;
-        }
-      }
-
-      // Upload documents
-      uploadBtn.addEventListener('click', async () => {
-        if (selectedFiles.length === 0) return;
-
-        const formData = new FormData();
-        selectedFiles.forEach(file => formData.append('files', file));
-
+        uploadBtn.disabled = false;
+      } else {
+        document.getElementById('selectedFiles').classList.add('hidden');
         uploadBtn.disabled = true;
-        document.getElementById('uploadProgress').classList.remove('hidden');
-        document.getElementById('uploadResult').classList.add('hidden');
+      }
+    }
 
-        try {
-          const response = await fetch('/api/documents/upload', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${authToken}` },
-            body: formData
-          });
+    // Upload documents
+    uploadBtn.addEventListener('click', async () => {
+      if (selectedFiles.length === 0) return;
 
-          const data = await response.json();
+      const formData = new FormData();
+      selectedFiles.forEach(file => formData.append('files', file));
 
-          document.getElementById('progressBar').style.width = '100%';
-          document.getElementById('progressPercent').textContent = '100%';
+      uploadBtn.disabled = true;
+      document.getElementById('uploadProgress').classList.remove('hidden');
+      document.getElementById('uploadResult').classList.add('hidden');
 
-          if (response.ok && data.success) {
-            document.getElementById('uploadResult').innerHTML = `
+      try {
+        const response = await fetch('/api/documents/upload', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${authToken}` },
+          body: formData
+        });
+
+        const data = await response.json();
+
+        document.getElementById('progressBar').style.width = '100%';
+        document.getElementById('progressPercent').textContent = '100%';
+
+        if (response.ok && data.success) {
+          document.getElementById('uploadResult').innerHTML = `
               <div class="bg-green-500/20 border border-green-500/50 rounded-lg p-4 text-green-300">
                 <div class="flex items-center gap-2 mb-2">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -405,15 +483,15 @@
                 <p class="text-sm">${data.documents_processed} document(s) processed, ${data.chunks_created} chunks created.</p>
               </div>
             `;
-            selectedFiles = [];
-            document.getElementById('selectedFiles').classList.add('hidden');
-            fileInput.value = '';
-            loadDocuments();
-          } else {
-            throw new Error(data.detail || 'Upload failed');
-          }
-        } catch (error) {
-          document.getElementById('uploadResult').innerHTML = `
+          selectedFiles = [];
+          document.getElementById('selectedFiles').classList.add('hidden');
+          fileInput.value = '';
+          loadDocuments();
+        } else {
+          throw new Error(data.detail || 'Upload failed');
+        }
+      } catch (error) {
+        document.getElementById('uploadResult').innerHTML = `
             <div class="bg-red-500/20 border border-red-500/50 rounded-lg p-4 text-red-300">
               <div class="flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -424,28 +502,28 @@
               <p class="text-sm mt-1">${error.message}</p>
             </div>
           `;
-        }
+      }
 
-        document.getElementById('uploadResult').classList.remove('hidden');
-        document.getElementById('uploadProgress').classList.add('hidden');
-        uploadBtn.disabled = false;
-      });
+      document.getElementById('uploadResult').classList.remove('hidden');
+      document.getElementById('uploadProgress').classList.add('hidden');
+      uploadBtn.disabled = false;
+    });
 
-      // Load documents
-      async function loadDocuments() {
-        try {
-          const response = await fetch('/api/documents/list', {
-            headers: { 'Authorization': `Bearer ${authToken}` }
-          });
+    // Load documents
+    async function loadDocuments() {
+      try {
+        const response = await fetch('/api/documents/list', {
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
 
-          const data = await response.json();
+        const data = await response.json();
 
-          if (response.ok) {
-            document.getElementById('totalDocs').textContent = data.total_documents || 0;
-            document.getElementById('totalChunks').textContent = data.total_chunks || 0;
+        if (response.ok) {
+          document.getElementById('totalDocs').textContent = data.total_documents || 0;
+          document.getElementById('totalChunks').textContent = data.total_chunks || 0;
 
-            if (data.documents && data.documents.length > 0) {
-              document.getElementById('documentsList').innerHTML = data.documents.map(doc => `
+          if (data.documents && data.documents.length > 0) {
+            document.getElementById('documentsList').innerHTML = data.documents.map(doc => `
                 <div class="bg-white/50 rounded-lg p-3 border border-gray-300/10 flex items-center gap-3 hover:border-gray-300/30 transition-colors">
                   <div class="w-10 h-10 bg-pvara-teal/20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -466,53 +544,53 @@
                   </button>
                 </div>
               `).join('');
-            } else {
-              document.getElementById('documentsList').innerHTML = `
+          } else {
+            document.getElementById('documentsList').innerHTML = `
                 <div class="text-center py-8 text-black/40">
                   <p>No documents in knowledge base</p>
                 </div>
               `;
-            }
           }
-        } catch (error) {
-          console.error('Failed to load documents:', error);
         }
+      } catch (error) {
+        console.error('Failed to load documents:', error);
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadDocuments);
+
+    // Delete document
+    async function deleteDocument(documentName) {
+      if (!confirm(`Are you sure you want to delete "${documentName}"?\n\nThis will remove all ${documentName} chunks from the knowledge base. This action cannot be undone.`)) {
+        return;
       }
 
-      document.getElementById('refreshBtn').addEventListener('click', loadDocuments);
+      try {
+        const response = await fetch(`/api/documents/delete/${encodeURIComponent(documentName)}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
 
-      // Delete document
-      async function deleteDocument(documentName) {
-        if (!confirm(`Are you sure you want to delete "${documentName}"?\n\nThis will remove all ${documentName} chunks from the knowledge base. This action cannot be undone.`)) {
-          return;
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          alert(`Document "${documentName}" deleted successfully.\n${data.chunks_deleted || 0} chunks removed.`);
+          loadDocuments(); // Refresh the list
+        } else {
+          throw new Error(data.detail || 'Delete failed');
         }
-
-        try {
-          const response = await fetch(`/api/documents/delete/${encodeURIComponent(documentName)}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${authToken}` }
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-            alert(`Document "${documentName}" deleted successfully.\n${data.chunks_deleted || 0} chunks removed.`);
-            loadDocuments(); // Refresh the list
-          } else {
-            throw new Error(data.detail || 'Delete failed');
-          }
-        } catch (error) {
-          alert(`Error deleting document: ${error.message}`);
-          console.error('Delete error:', error);
-        }
+      } catch (error) {
+        alert(`Error deleting document: ${error.message}`);
+        console.error('Delete error:', error);
       }
+    }
 
-      // Make deleteDocument available globally
-      window.deleteDocument = deleteDocument;
+    // Make deleteDocument available globally
+    window.deleteDocument = deleteDocument;
 
-      // Initialize
-      checkSession();
-    </script>
-  </body>
+    // Initialize
+    checkSession();
+  </script>
+</body>
+
 </html>
-
