@@ -189,14 +189,14 @@
 
         <!-- Upload Section -->
         <div class="glass-card rounded-xl p-6">
-          <h2 class="text-lg font-semibold text-black mb-4 flex items-center gap-2">
-            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
             Upload Documents
           </h2>
-          <p class="text-black/60 text-sm mb-6">Upload PDF or DOCX files to update Sindh Police's operational knowledge
+          <p class="text-gray-300 text-sm mb-6">Upload PDF or DOCX files to update Sindh Police's operational knowledge
             base.</p>
 
           <!-- Upload Zone -->
@@ -207,13 +207,13 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                 d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <p class="text-black/80 font-medium mb-1">Drop files here or click to browse</p>
-            <p class="text-black/50 text-sm">Supports PDF and DOCX files</p>
+            <p class="text-gray-200 font-medium mb-1">Drop files here or click to browse</p>
+            <p class="text-gray-400 text-sm">Supports PDF and DOCX files</p>
           </div>
 
           <!-- Selected Files -->
           <div id="selectedFiles" class="hidden mb-4">
-            <h3 class="text-sm font-medium text-black/80 mb-2">Selected Files:</h3>
+            <h3 class="text-sm font-medium text-gray-300 mb-2">Selected Files:</h3>
             <div id="fileList" class="space-y-2"></div>
           </div>
 
@@ -230,7 +230,7 @@
           <!-- Upload Progress -->
           <div id="uploadProgress" class="hidden mt-4">
             <div class="flex items-center justify-between text-sm mb-2">
-              <span class="text-black/80">Processing documents...</span>
+              <span class="text-gray-200">Processing documents...</span>
               <span id="progressPercent" class="text-pvara-gold">0%</span>
             </div>
             <div class="h-2 bg-white rounded-full overflow-hidden">
@@ -238,7 +238,7 @@
                 class="h-full bg-gradient-to-r from-pvara-teal to-pvara-gold transition-all duration-300"
                 style="width: 0%"></div>
             </div>
-            <p id="progressStatus" class="text-xs text-black/50 mt-2"></p>
+            <p id="progressStatus" class="text-xs text-gray-400 mt-2"></p>
           </div>
 
           <!-- Upload Result -->
@@ -255,7 +255,7 @@
               </svg>
               Knowledge Base
             </h2>
-            <button id="refreshBtn" class="text-black/60 hover:text-black p-2" title="Refresh">
+            <button id="refreshBtn" class="text-gray-300 hover:text-white p-2" title="Refresh">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -265,19 +265,19 @@
 
           <!-- Stats -->
           <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-              <p class="text-2xl font-bold text-black" id="totalDocs">-</p>
-              <p class="text-xs text-black/50">Documents</p>
+            <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
+              <p class="text-2xl font-bold text-white" id="totalDocs">-</p>
+              <p class="text-xs text-gray-400">Documents</p>
             </div>
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+            <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
               <p class="text-2xl font-bold text-pvara-gold" id="totalChunks">-</p>
-              <p class="text-xs text-black/50">Text Chunks</p>
+              <p class="text-xs text-gray-400">Text Chunks</p>
             </div>
           </div>
 
           <!-- Documents List -->
           <div id="documentsList" class="space-y-2 max-h-[400px] overflow-y-auto">
-            <div class="text-center py-8 text-black/40">
+            <div class="text-center py-8 text-gray-400">
               <svg class="w-10 h-10 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -298,34 +298,37 @@
           How It Works
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+          <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
             <div
-              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">1
+              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-gold-400 font-bold mb-3">
+              1
             </div>
             <h3 class="font-medium text-white mb-1">Upload</h3>
-            <p class="text-black/50 text-xs">Select PDF or DOCX files containing Sindh Police policies, procedures, or
+            <p class="text-gray-400 text-xs">Select PDF or DOCX files containing Sindh Police policies, procedures, or
               operational guidelines.</p>
           </div>
-          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+          <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
             <div
-              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">2
+              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-gold-400 font-bold mb-3">
+              2
             </div>
             <h3 class="font-medium text-white mb-1">Extract</h3>
-            <p class="text-black/50 text-xs">System extracts text content and splits into manageable chunks.</p>
+            <p class="text-gray-400 text-xs">System extracts text content and splits into manageable chunks.</p>
           </div>
-          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+          <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
             <div
-              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black font-bold mb-3">3
+              class="w-8 h-8 bg-pvara-teal/20 rounded-full flex items-center justify-center text-gold-400 font-bold mb-3">
+              3
             </div>
             <h3 class="font-medium text-white mb-1">Embed</h3>
-            <p class="text-black/50 text-xs">Creates AI embeddings using OpenAI's text-embedding model.</p>
+            <p class="text-gray-400 text-xs">Creates AI embeddings using OpenAI's text-embedding model.</p>
           </div>
-          <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+          <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
             <div
               class="w-8 h-8 bg-pvara-gold/20 rounded-full flex items-center justify-center text-pvara-gold font-bold mb-3">
               4</div>
             <h3 class="font-medium text-white mb-1">Store</h3>
-            <p class="text-black/50 text-xs">Embeddings stored in Pinecone for AI to reference during meetings.</p>
+            <p class="text-gray-400 text-xs">Embeddings stored in Pinecone for AI to reference during meetings.</p>
           </div>
         </div>
       </div>
@@ -433,12 +436,12 @@
       if (selectedFiles.length > 0) {
         document.getElementById('selectedFiles').classList.remove('hidden');
         document.getElementById('fileList').innerHTML = selectedFiles.map(f => `
-            <div class="flex items-center gap-2 text-sm bg-white/50 rounded-lg px-3 py-2">
-              <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex items-center gap-2 text-sm bg-navy-700/60 rounded-lg px-3 py-2 border border-gold-500/20">
+              <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <span class="text-white flex-1">${f.name}</span>
-              <span class="text-black/50 text-xs">${(f.size / 1024).toFixed(1)} KB</span>
+              <span class="text-gray-400 text-xs">${(f.size / 1024).toFixed(1)} KB</span>
             </div>
           `).join('');
         uploadBtn.disabled = false;
@@ -524,15 +527,15 @@
 
           if (data.documents && data.documents.length > 0) {
             document.getElementById('documentsList').innerHTML = data.documents.map(doc => `
-                <div class="bg-white/50 rounded-lg p-3 border border-gray-300/10 flex items-center gap-3 hover:border-gray-300/30 transition-colors">
+                <div class="bg-navy-700/60 rounded-lg p-3 border border-gold-500/20 flex items-center gap-3 hover:border-gold-500/40 transition-colors">
                   <div class="w-10 h-10 bg-pvara-teal/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="text-white text-sm font-medium truncate" title="${doc.name}">${doc.name}</p>
-                    <p class="text-black/50 text-xs">${doc.chunks} chunks • ${doc.uploaded_at || 'Unknown date'}</p>
+                    <p class="text-gray-400 text-xs">${doc.chunks} chunks • ${doc.uploaded_at || 'Unknown date'}</p>
                   </div>
                   <button 
                     onclick="deleteDocument('${doc.name.replace(/'/g, "\\'")}')" 
@@ -546,7 +549,7 @@
               `).join('');
           } else {
             document.getElementById('documentsList').innerHTML = `
-                <div class="text-center py-8 text-black/40">
+                <div class="text-center py-8 text-gray-400">
                   <p>No documents in knowledge base</p>
                 </div>
               `;

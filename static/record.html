@@ -212,13 +212,7 @@
             </svg>
             Live Meeting
           </a>
-          <a id="adminLink" href="/admin" class="hidden text-white/80 hover:text-white text-sm flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Documents
-          </a>
+
           <button id="logoutBtn" class="text-white/80 hover:text-white p-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -235,18 +229,18 @@
 
         <!-- Recording Section -->
         <div class="glass-card rounded-xl p-6">
-          <h2 class="text-lg font-semibold text-black mb-2 flex items-center gap-2">
-            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <h2 class="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+            <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
             </svg>
             Record Motion
           </h2>
-          <p class="text-black/60 text-sm mb-6">Describe the motion and its proposed changes. The AI will analyze and
+          <p class="text-gray-300 text-sm mb-6">Describe the motion and its proposed changes. The AI will analyze and
             vote.</p>
 
           <!-- Recording Visualization -->
-          <div id="recordingVisual" class="bg-white/50 rounded-xl p-8 mb-6 border border-gray-300/10">
+          <div id="recordingVisual" class="bg-navy-700/60 rounded-xl p-8 mb-6 border border-gold-500/20">
             <!-- Idle State -->
             <div id="idleState" class="text-center">
               <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-pvara-teal/20 flex items-center justify-center">
@@ -255,7 +249,7 @@
                     d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                 </svg>
               </div>
-              <p class="text-black/50 text-sm">Click the button below to start recording</p>
+              <p class="text-gray-300 text-sm">Click the button below to start recording</p>
             </div>
 
             <!-- Recording State -->
@@ -269,7 +263,7 @@
                 </div>
               </div>
               <p class="text-red-400 font-medium mb-1">Recording...</p>
-              <p id="recordingDuration" class="text-black/50 text-sm font-mono">00:00</p>
+              <p id="recordingDuration" class="text-gray-300 text-sm font-mono">00:00</p>
 
               <!-- Waveform -->
               <div class="flex items-center justify-center gap-1 h-12 mt-4">
@@ -292,7 +286,7 @@
                 </svg>
               </div>
               <p class="text-green-400 font-medium mb-1">Recording Complete</p>
-              <p id="recordedDuration" class="text-black/50 text-sm">Duration: 00:00</p>
+              <p id="recordedDuration" class="text-gray-300 text-sm">Duration: 00:00</p>
 
               <!-- Audio Player -->
               <audio id="audioPlayer" controls class="w-full mt-4"></audio>
@@ -333,7 +327,7 @@
           <div id="processingStatus" class="hidden mt-4 text-center">
             <div class="animate-spin w-8 h-8 mx-auto mb-2 border-2 border-gray-300 border-t-transparent rounded-full">
             </div>
-            <p id="statusText" class="text-black/80 text-sm">Processing...</p>
+            <p id="statusText" class="text-gray-300 text-sm">Processing...</p>
           </div>
         </div>
 
@@ -342,13 +336,13 @@
           <!-- Transcription -->
           <div id="transcriptionCard" class="hidden glass-card rounded-xl p-6">
             <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Transcription
             </h2>
-            <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
+            <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
               <p id="transcriptionText" class="text-white text-sm leading-relaxed"></p>
             </div>
           </div>
@@ -370,20 +364,20 @@
 
             <!-- Vote Details -->
             <div class="space-y-4 text-sm">
-              <div class="bg-white/50 rounded-lg p-4 border border-pvara-gold/20">
+              <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/30">
                 <span class="text-pvara-gold block mb-2 font-medium">Motion Summary:</span>
                 <p id="voteMotion" class="text-white leading-relaxed font-medium"></p>
               </div>
-              <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                <span class="text-black/60 block mb-2 font-medium">Reasoning:</span>
+              <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
+                <span class="text-gray-300 block mb-2 font-medium">Reasoning:</span>
                 <p id="voteReasoning" class="text-white leading-relaxed"></p>
               </div>
-              <div class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                <span class="text-black/60 block mb-2 font-medium">Policy Reference:</span>
-                <p id="voteReference" class="text-black"></p>
+              <div class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
+                <span class="text-gray-300 block mb-2 font-medium">Policy Reference:</span>
+                <p id="voteReference" class="text-white"></p>
               </div>
-              <div id="riskSection" class="bg-white/50 rounded-lg p-4 border border-gray-300/10">
-                <span class="text-black/60 block mb-2 font-medium">Risk Assessment:</span>
+              <div id="riskSection" class="bg-navy-700/60 rounded-lg p-4 border border-gold-500/20">
+                <span class="text-gray-300 block mb-2 font-medium">Risk Assessment:</span>
                 <p id="voteRisk" class="text-pvara-gold"></p>
               </div>
             </div>
@@ -402,21 +396,21 @@
               </svg>
               How to Use
             </h2>
-            <ol class="space-y-3 text-sm text-black/70">
+            <ol class="space-y-3 text-sm text-gray-300">
               <li class="flex items-start gap-3">
                 <span
-                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">1</span>
+                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">1</span>
                 <span>Click <strong class="text-white">"Start Recording"</strong> and describe the motion or
                   proposal</span>
               </li>
               <li class="flex items-start gap-3">
                 <span
-                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">2</span>
+                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">2</span>
                 <span>Click <strong class="text-white">"Stop Recording"</strong> when finished</span>
               </li>
               <li class="flex items-start gap-3">
                 <span
-                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-black text-xs font-bold flex-shrink-0">3</span>
+                  class="w-6 h-6 bg-pvara-teal/20 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">3</span>
                 <span>Review the recording using the audio player</span>
               </li>
               <li class="flex items-start gap-3">
@@ -498,16 +492,7 @@
       document.getElementById('loginModal').style.display = 'none';
       document.getElementById('mainContent').classList.remove('hidden');
 
-      // Show admin link for admin/secretary users
-      const userStr = localStorage.getItem('pvara_user');
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          if (user.role === 'admin' || user.role === 'secretary') {
-            document.getElementById('adminLink').classList.remove('hidden');
-          }
-        } catch (e) { }
-      }
+      // Admin link removed
     }
 
     // Logout
