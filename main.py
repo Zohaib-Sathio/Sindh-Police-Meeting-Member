@@ -373,6 +373,19 @@ Make the notes professional, clear, and well-organized. Use proper formatting wi
     else:
         result["notes_generated"] = False
     
+    # Add full meeting minutes data for the frontend popup
+    if meeting_id in meeting_sessions:
+        session = meeting_sessions[meeting_id]
+        result["minutes"] = {
+            "meeting_id": meeting_id,
+            "start_time": session.get("start_time", ""),
+            "end_time": session.get("end_time", ""),
+            "agenda": session.get("agenda", ""),
+            "transcript": session.get("transcript", []),
+            "votes": session.get("votes", []),
+            "motions": session.get("motions", []),
+        }
+    
     return result
 
 
