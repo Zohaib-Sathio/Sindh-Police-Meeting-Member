@@ -33,6 +33,7 @@ import audioop
 from contextlib import suppress
 
 from prompts import function_call_tools, build_system_message
+from database import init_db, save_meeting_minutes, get_all_meetings, get_meeting_minutes as db_get_meeting_minutes
 from tools import (
     start_meeting_session,
     end_meeting_session,
@@ -113,6 +114,10 @@ USERS_DB = {
 
 from fastapi.staticfiles import StaticFiles
 app.mount("/client", StaticFiles(directory="static", html=True), name="client")
+
+@app.on_event("startup")
+async def startup_event():
+    init_db()
 
 CHANNELS = 1
 RATE = 8000
@@ -385,6 +390,17 @@ Make the notes professional, clear, and well-organized. Use proper formatting wi
             "votes": session.get("votes", []),
             "motions": session.get("motions", []),
         }
+
+        # Persist meeting minutes to database
+        try:
+            save_meeting_minutes(
+                meeting_id,
+                session,
+                meeting_notes=meeting_notes,
+                duration_minutes=result.get("duration_minutes", 0),
+            )
+        except Exception as e:
+            print(f"⚠️ Failed to save meeting minutes to DB: {e}")
     
     return result
 
@@ -1787,6 +1803,33 @@ Respond with valid JSON only."""
     except Exception as e:
         print(f"❌ Recording vote error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# MEETING HISTORY ENDPOINTS
+# =============================================================================
+
+@app.get("/meetings", response_class=HTMLResponse)
+async def meetings_page():
+    with open("static/meetings.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+
+@app.get("/api/meetings")
+async def api_list_meetings(request: Request):
+    token = get_token_from_request(request)
+    verify_jwt_token(token)
+    return {"meetings": get_all_meetings()}
+
+
+@app.get("/api/meetings/{meeting_id}/minutes")
+async def api_get_minutes(meeting_id: str, request: Request):
+    token = get_token_from_request(request)
+    verify_jwt_token(token)
+    minutes = db_get_meeting_minutes(meeting_id)
+    if not minutes:
+        raise HTTPException(status_code=404, detail="Meeting not found")
+    return minutes
 
 
 if __name__ == "__main__":

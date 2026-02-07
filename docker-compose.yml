@@ -23,6 +23,8 @@ services:
     volumes:
       # Mount documents folder for document ingestion
       - ./documents:/app/documents:ro
+      # Persist meeting database across rebuilds
+      - meetings-data:/app/data
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:6083/health" ]
@@ -32,6 +34,10 @@ services:
       start_period: 10s
     networks:
       - app-network
+
+volumes:
+  meetings-data:
+    driver: local
 
 networks:
   app-network:

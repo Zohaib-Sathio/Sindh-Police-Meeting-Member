@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Meeting History - Sindh Police AI Meeting Member</title>
+  <link rel="icon" href="/client/logo-with-title.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "navy": { 50:"#e8eef5",100:"#c5d4e8",200:"#9fb8d9",300:"#7a9cc9",400:"#5d84bc",500:"#1e3a5f",600:"#0f2847",700:"#0a1628",800:"#060d19",900:"#030810" },
+            "gold":  { 50:"#fef9e6",100:"#fdf0bf",200:"#fce794",300:"#fad969",400:"#f8cb47",500:"#d4af37",600:"#c4a000",700:"#a08200",800:"#7c6500",900:"#584800" },
+          },
+          fontFamily: { sans:["Inter","Plus Jakarta Sans","sans-serif"], mono:["JetBrains Mono","monospace"] },
+          animation: { "fade-in":"fadeIn .5s ease-out", "slide-up":"slideUp .4s ease-out" },
+          keyframes: {
+            fadeIn:  { "0%":{ opacity:"0" }, "100%":{ opacity:"1" } },
+            slideUp: { "0%":{ opacity:"0", transform:"translateY(20px)" }, "100%":{ opacity:"1", transform:"translateY(0)" } },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: "Inter","Plus Jakarta Sans",sans-serif;
+      background: linear-gradient(135deg,#0a1628 0%,#0f2847 50%,#0a1628 100%);
+      min-height: 100vh;
+      color: #e8eef5;
+    }
+    body::before {
+      content:''; position:fixed; inset:0;
+      background:
+        radial-gradient(ellipse at 20% 20%,rgba(30,58,95,.4) 0%,transparent 50%),
+        radial-gradient(ellipse at 80% 80%,rgba(15,40,71,.4) 0%,transparent 50%),
+        radial-gradient(ellipse at 50% 50%,rgba(212,175,55,.05) 0%,transparent 70%);
+      pointer-events:none; z-index:-1;
+    }
+    .glass-card {
+      background:linear-gradient(135deg,rgba(15,40,71,.8) 0%,rgba(30,58,95,.6) 100%);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border:1px solid rgba(212,175,55,.15);
+      box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.05);
+      border-radius:1rem;
+    }
+    .minutes-tab { color:#9ca3af; border-bottom:2px solid transparent; background:transparent; }
+    .minutes-tab:hover { color:#e5e7eb; background:rgba(30,58,95,.3); }
+    .minutes-tab.active { color:#d4af37; border-bottom-color:#d4af37; background:rgba(212,175,55,.08); }
+    /* dark markdown */
+    .md-dark h1 { font-size:1.75rem; font-weight:700; color:#fad969; margin:1.5rem 0 1rem; padding-bottom:.5rem; border-bottom:2px solid rgba(212,175,55,.4); }
+    .md-dark h2 { font-size:1.35rem; font-weight:600; color:#d4af37; margin:1.25rem 0 .75rem; padding-bottom:.25rem; border-bottom:1px solid rgba(212,175,55,.2); }
+    .md-dark h3 { font-size:1.15rem; font-weight:600; color:#fce794; margin:1rem 0 .5rem; }
+    .md-dark p { margin:.75rem 0; color:#cbd5e1; }
+    .md-dark ul,.md-dark ol { margin:.75rem 0; padding-left:1.5rem; }
+    .md-dark li { margin:.35rem 0; color:#cbd5e1; }
+    .md-dark li::marker { color:#d4af37; }
+    .md-dark strong { font-weight:600; color:#f1f5f9; }
+    .md-dark em { font-style:italic; color:#94a3b8; }
+    .md-dark blockquote { border-left:4px solid #d4af37; padding:.75rem 1rem; margin:1rem 0; background:rgba(212,175,55,.08); color:#94a3b8; border-radius:0 .5rem .5rem 0; }
+    .md-dark code { background:rgba(30,58,95,.6); padding:.125rem .375rem; border-radius:.25rem; font-family:"JetBrains Mono",monospace; font-size:.875em; color:#fad969; }
+    .md-dark pre { background:rgba(6,13,25,.6); color:#e2e8f0; padding:1rem; border-radius:.5rem; overflow-x:auto; margin:1rem 0; }
+    .md-dark pre code { background:transparent; padding:0; color:inherit; }
+    .md-dark hr { border:none; border-top:2px solid rgba(212,175,55,.3); margin:1.5rem 0; }
+    .md-dark th { background:rgba(30,58,95,.5); color:#d4af37; border-color:rgba(30,58,95,.4); }
+    .md-dark td { border-color:rgba(30,58,95,.3); color:#cbd5e1; }
+    .md-dark a { color:#fad969; text-decoration:underline; }
+    .md-dark a:hover { color:#fce794; }
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:rgba(10,22,40,.5); border-radius:3px; }
+    ::-webkit-scrollbar-thumb { background:linear-gradient(180deg,#d4af37,#c4a000); border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:linear-gradient(180deg,#fad969,#d4af37); }
+  </style>
+</head>
+
+<body class="h-full flex flex-col">
+
+  <!-- Header -->
+  <header class="flex-shrink-0 bg-navy-800/80 backdrop-blur-md border-b border-gold-500/20 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+          <img src="/client/logo-with-title.png" alt="Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg" onerror="this.style.display='none'" />
+          <div>
+            <h1 class="text-base sm:text-lg font-bold text-white leading-tight">Meeting History</h1>
+            <p class="text-[10px] sm:text-xs text-gold-400">Sindh Police AI Meeting Member</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2 text-sm text-gray-300 hover:text-gold-400 transition-colors px-3 py-2 rounded-lg hover:bg-navy-600/50">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z"/></svg>
+          Dashboard
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+      <!-- List View -->
+      <div id="listView">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl sm:text-2xl font-bold text-white">All Meetings</h2>
+          <button onclick="loadMeetings()" class="text-sm text-gray-400 hover:text-gold-400 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-navy-600/50">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            Refresh
+          </button>
+        </div>
+
+        <!-- Loading -->
+        <div id="listLoading" class="text-center py-16">
+          <svg class="animate-spin w-8 h-8 mx-auto text-gold-400 mb-3" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="text-gray-400 text-sm">Loading meetings...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="listEmpty" class="hidden text-center py-16">
+          <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <p class="text-gray-400 text-lg mb-1">No meetings yet</p>
+          <p class="text-gray-500 text-sm">Meetings will appear here once they are ended.</p>
+        </div>
+
+        <!-- Meeting Cards Grid -->
+        <div id="meetingsList" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- Detail View (hidden initially) -->
+      <div id="detailView" class="hidden">
+        <button onclick="showList()" class="flex items-center gap-2 text-sm text-gray-400 hover:text-gold-400 transition-colors mb-5 px-3 py-1.5 rounded-lg hover:bg-navy-600/50">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Back to All Meetings
+        </button>
+
+        <!-- Detail Loading -->
+        <div id="detailLoading" class="text-center py-16">
+          <svg class="animate-spin w-8 h-8 mx-auto text-gold-400 mb-3" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="text-gray-400 text-sm">Loading meeting minutes...</p>
+        </div>
+
+        <!-- Detail Content -->
+        <div id="detailContent" class="hidden"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const authToken = localStorage.getItem('pvara_token');
+    if (!authToken) {
+      window.location.href = '/';
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatDate(iso) {
+      if (!iso) return 'N/A';
+      try {
+        return new Date(iso).toLocaleString('en-PK', { dateStyle: 'medium', timeStyle: 'short' });
+      } catch { return iso; }
+    }
+
+    function formatTime(iso) {
+      if (!iso) return '';
+      try {
+        return new Date(iso).toLocaleTimeString('en-PK', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      } catch { return iso; }
+    }
+
+    // ── List View ──────────────────────────────────────
+
+    async function loadMeetings() {
+      const listLoading = document.getElementById('listLoading');
+      const listEmpty   = document.getElementById('listEmpty');
+      const meetingsList = document.getElementById('meetingsList');
+
+      listLoading.classList.remove('hidden');
+      listEmpty.classList.add('hidden');
+      meetingsList.classList.add('hidden');
+
+      try {
+        const res = await fetch('/api/meetings', {
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        if (res.status === 401) { window.location.href = '/'; return; }
+        const data = await res.json();
+        const meetings = data.meetings || [];
+
+        listLoading.classList.add('hidden');
+
+        if (meetings.length === 0) {
+          listEmpty.classList.remove('hidden');
+          return;
+        }
+
+        meetingsList.innerHTML = meetings.map(m => `
+          <button onclick="openMeeting('${escapeHtml(m.meeting_id)}')"
+                  class="glass-card p-5 text-left hover:border-gold-500/40 transition-all group animate-fade-in">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <h3 class="text-sm font-semibold text-white group-hover:text-gold-400 transition-colors truncate">${escapeHtml(m.meeting_id)}</h3>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">${formatDate(m.start_time)}</p>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="bg-navy-800/50 rounded-lg py-1.5 px-2">
+                <p class="text-[10px] text-gray-500 uppercase">Duration</p>
+                <p class="text-xs font-semibold text-gold-400">${m.duration_minutes} min</p>
+              </div>
+              <div class="bg-navy-800/50 rounded-lg py-1.5 px-2">
+                <p class="text-[10px] text-gray-500 uppercase">Votes</p>
+                <p class="text-xs font-semibold text-emerald-400">${m.total_votes}</p>
+              </div>
+              <div class="bg-navy-800/50 rounded-lg py-1.5 px-2">
+                <p class="text-[10px] text-gray-500 uppercase">Motions</p>
+                <p class="text-xs font-semibold text-blue-400">${m.total_motions}</p>
+              </div>
+            </div>
+          </button>
+        `).join('');
+
+        meetingsList.classList.remove('hidden');
+      } catch (err) {
+        console.error('Failed to load meetings:', err);
+        listLoading.classList.add('hidden');
+        listEmpty.classList.remove('hidden');
+      }
+    }
+
+    // ── Detail View ────────────────────────────────────
+
+    function showList() {
+      document.getElementById('detailView').classList.add('hidden');
+      document.getElementById('listView').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    async function openMeeting(meetingId) {
+      document.getElementById('listView').classList.add('hidden');
+      const detailView    = document.getElementById('detailView');
+      const detailLoading = document.getElementById('detailLoading');
+      const detailContent = document.getElementById('detailContent');
+
+      detailView.classList.remove('hidden');
+      detailLoading.classList.remove('hidden');
+      detailContent.classList.add('hidden');
+      window.scrollTo(0, 0);
+
+      try {
+        const res = await fetch(`/api/meetings/${encodeURIComponent(meetingId)}/minutes`, {
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        if (res.status === 401) { window.location.href = '/'; return; }
+        if (!res.ok) throw new Error('Not found');
+        const data = await res.json();
+
+        detailLoading.classList.add('hidden');
+        detailContent.classList.remove('hidden');
+        renderMinutes(data);
+      } catch (err) {
+        console.error('Failed to load meeting:', err);
+        detailLoading.classList.add('hidden');
+        detailContent.innerHTML = `<div class="text-center py-16"><p class="text-red-400">Failed to load meeting minutes.</p></div>`;
+        detailContent.classList.remove('hidden');
+      }
+    }
+
+    function voteColor(v) {
+      if (v === 'FOR')     return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+      if (v === 'AGAINST') return 'bg-red-500/20 text-red-400 border-red-500/30';
+      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+    }
+
+    function renderMinutes(data) {
+      const container = document.getElementById('detailContent');
+      const transcript = data.transcript || [];
+      const votes      = data.votes || [];
+      const motions    = data.motions || [];
+      const notes      = data.meeting_notes || '';
+
+      const speakers = [...new Set(transcript.map(t => t.speaker).filter(Boolean))];
+
+      // Transcript HTML
+      let transcriptHtml = '';
+      if (transcript.length === 0) {
+        transcriptHtml = '<p class="text-gray-400 text-sm italic">No transcript entries recorded.</p>';
+      } else {
+        transcriptHtml = transcript.map(e => {
+          const isSindh = (e.speaker||'').toLowerCase().includes('sindh');
+          const sc = isSindh ? 'text-gold-400' : 'text-blue-400';
+          return `<div class="flex gap-3 py-2 border-b border-navy-600/30 last:border-0">
+            <span class="text-xs text-gray-500 font-mono whitespace-nowrap pt-0.5">${escapeHtml(formatTime(e.timestamp))}</span>
+            <div><span class="text-xs font-semibold ${sc}">${escapeHtml(e.speaker||'Unknown')}</span>
+            <p class="text-sm text-gray-200 mt-0.5">${escapeHtml(e.text||'')}</p></div></div>`;
+        }).join('');
+      }
+
+      // Votes HTML
+      let votesHtml = '';
+      if (votes.length === 0) {
+        votesHtml = '<p class="text-gray-400 text-sm italic">No votes were cast during this meeting.</p>';
+      } else {
+        votesHtml = votes.map(v => `
+          <div class="bg-navy-700/50 rounded-lg p-4 border border-navy-600/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-semibold text-gray-200 flex-1 mr-3">${escapeHtml(v.motion||'N/A')}</h4>
+              <span class="text-xs font-bold px-3 py-1 rounded-full border ${voteColor(v.vote)}">${escapeHtml(v.vote||'N/A')}</span>
+            </div>
+            <p class="text-xs text-gray-400"><span class="text-gray-500">Reasoning:</span> ${escapeHtml(v.reasoning||'N/A')}</p>
+            ${v.regulatory_reference ? `<p class="text-xs text-gray-400"><span class="text-gray-500">Reference:</span> ${escapeHtml(v.regulatory_reference)}</p>` : ''}
+            ${v.risk_assessment ? `<p class="text-xs text-gray-400"><span class="text-gray-500">Risk:</span> ${escapeHtml(v.risk_assessment)}</p>` : ''}
+          </div>`).join('');
+      }
+
+      // Motions HTML
+      let motionsHtml = '';
+      if (motions.length === 0) {
+        motionsHtml = '<p class="text-gray-400 text-sm italic">No motions were raised during this meeting.</p>';
+      } else {
+        motionsHtml = motions.map(m => {
+          const sc = m.status==='pending' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+          return `<div class="bg-navy-700/50 rounded-lg p-4 border border-navy-600/30 space-y-1">
+            <div class="flex items-center justify-between">
+              <p class="text-sm text-gray-200 font-medium">${escapeHtml(m.motion_text||'N/A')}</p>
+              <span class="text-xs px-2 py-0.5 rounded-full border ${sc} whitespace-nowrap ml-2">${escapeHtml(m.status||'unknown')}</span>
+            </div>
+            <p class="text-xs text-gray-500">Proposed by: ${escapeHtml(m.proposed_by||'N/A')}</p>
+          </div>`;
+        }).join('');
+      }
+
+      container.innerHTML = `
+        <!-- Meeting Title -->
+        <div class="glass-card p-6 mb-5 animate-slide-up">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-bold text-white">Minutes of the Meeting</h2>
+              <p class="text-xs text-gray-400">${escapeHtml(data.meeting_id)}</p>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+            <div class="bg-navy-700/60 rounded-lg p-3 border border-navy-600/30 text-center">
+              <p class="text-xs text-gray-500 uppercase tracking-wide">Started</p>
+              <p class="text-sm font-semibold text-gray-200 mt-1">${formatDate(data.start_time)}</p>
+            </div>
+            <div class="bg-navy-700/60 rounded-lg p-3 border border-navy-600/30 text-center">
+              <p class="text-xs text-gray-500 uppercase tracking-wide">Duration</p>
+              <p class="text-sm font-semibold text-gold-400 mt-1">${data.duration_minutes} min</p>
+            </div>
+            <div class="bg-navy-700/60 rounded-lg p-3 border border-navy-600/30 text-center">
+              <p class="text-xs text-gray-500 uppercase tracking-wide">Votes Cast</p>
+              <p class="text-sm font-semibold text-emerald-400 mt-1">${votes.length}</p>
+            </div>
+            <div class="bg-navy-700/60 rounded-lg p-3 border border-navy-600/30 text-center">
+              <p class="text-xs text-gray-500 uppercase tracking-wide">Motions</p>
+              <p class="text-sm font-semibold text-blue-400 mt-1">${motions.length}</p>
+            </div>
+          </div>
+
+          ${speakers.length > 0 ? `
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs text-gray-500">Participants:</span>
+            ${speakers.map(s => `<span class="text-xs bg-navy-600/60 text-gray-300 px-2 py-0.5 rounded-full border border-navy-500/30">${escapeHtml(s)}</span>`).join('')}
+          </div>` : ''}
+        </div>
+
+        <!-- Tabs -->
+        <div class="glass-card overflow-hidden animate-slide-up" style="animation-delay:.1s">
+          <div class="flex-shrink-0 px-6 pt-3 border-b border-navy-600/30 flex gap-1 overflow-x-auto" id="detailTabs">
+            <button class="minutes-tab active px-4 py-2 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap" data-tab="notes">AI Notes</button>
+            <button class="minutes-tab px-4 py-2 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap" data-tab="transcript">Transcript <span class="text-xs opacity-60">(${transcript.length})</span></button>
+            <button class="minutes-tab px-4 py-2 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap" data-tab="votes">Votes <span class="text-xs opacity-60">(${votes.length})</span></button>
+            <button class="minutes-tab px-4 py-2 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap" data-tab="motions">Motions <span class="text-xs opacity-60">(${motions.length})</span></button>
+          </div>
+
+          <div class="p-6">
+            <div class="tab-panel" data-tab="notes">
+              ${notes ? `<div class="md-dark">${marked.parse(notes)}</div>` : '<p class="text-gray-400 text-sm italic">Meeting notes were not generated.</p>'}
+            </div>
+            <div class="tab-panel hidden" data-tab="transcript">
+              <div class="bg-navy-800/40 rounded-lg p-4 border border-navy-600/30 max-h-[60vh] overflow-y-auto">
+                ${transcriptHtml}
+              </div>
+            </div>
+            <div class="tab-panel hidden" data-tab="votes">
+              <div class="space-y-3">${votesHtml}</div>
+            </div>
+            <div class="tab-panel hidden" data-tab="motions">
+              <div class="space-y-3">${motionsHtml}</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Wire up tabs
+      container.querySelectorAll('.minutes-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          container.querySelectorAll('.minutes-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const target = tab.dataset.tab;
+          container.querySelectorAll('.tab-panel').forEach(p => {
+            p.classList.toggle('hidden', p.dataset.tab !== target);
+          });
+        });
+      });
+    }
+
+    // Boot
+    loadMeetings();
+  </script>
+
+</body>
+</html>

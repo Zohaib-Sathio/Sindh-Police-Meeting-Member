@@ -27,6 +27,12 @@ recordings/
 # Documents (stored in Pinecone)
 documents/
 
+# Database
+data/
+*.db
+*.db-wal
+*.db-shm
+
 # Temporary files
 *.tmp
 *~

@@ -60,6 +60,12 @@ docker-compose*.yml
 .gemini/
 .agent/
 
+# Database (persisted via Docker volume)
+data/
+*.db
+*.db-wal
+*.db-shm
+
 # Miscellaneous
 *.bak
 *.tmp
